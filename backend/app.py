@@ -7,8 +7,8 @@ app = Flask(__name__)
 CORS(app)  # Permitir solicitudes desde el frontend
 
 # Configuración de la base de datos SQLite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///usuarios.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
@@ -36,8 +36,8 @@ def register():
     if User.query.filter_by(username=username).first():
         return jsonify({"error": "El usuario ya existe"}), 400
 
-    # Crear un nuevo usuario
-    hashed_password = generate_password_hash(password, method='sha256')
+    # Crear un nuevo usuario con método de hash predeterminado (no especificamos method)
+    hashed_password = generate_password_hash(password)
     new_user = User(username=username, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
