@@ -8,24 +8,47 @@ document.addEventListener("DOMContentLoaded", function () {
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
             
-            // PROBAR LOGIN CORRECTO CON USUARIO Y CONTRASEÑA
-            const validUser = "Adrian";
-            const validPass = "1234";
-
             // Validar que los campos no estén vacíos
             if (username === "" || password === "") {
                 alert("Por favor, completa todos los campos.");
                 return;
             }
 
-            // Validar credenciales 
-            if (username === validUser && password === validPass) {
-                alert("Inicio de sesión exitoso. Redirigiendo...");
-                // Redirigir a otra página (ejemplo: dashboard.html)
-                window.location.href = "dashboard.html";
-            } else {
-                alert("Usuario o contraseña incorrectos.");
-            }
+            // Realizar la petición de login al backend
+            fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Inicio de sesión exitoso") {
+                    alert("Inicio de sesión exitoso. Redirigiendo...");
+                    // Redirigir a otra página (ejemplo: dashboard.html)
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert(data.error || "Error al iniciar sesión");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error de conexión con el servidor");
+            });
+        });
+    }
+
+    // Capturar el botón de registro en la página de inicio
+    const registroButton = document.getElementById("registroButton");
+    
+    if (registroButton) {
+        registroButton.addEventListener("click", function () {
+            // Redirigir al registro
+            window.location.href = "registro.html";
         });
     }
 
@@ -34,15 +57,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (confirmButton) {
         confirmButton.addEventListener("click", function () {
-            // Redirigir al login
-            window.location.href = "login.html";
-        });
-    }
-
-    if (registroButton) {
-        registroButton.addEventListener("click", function () {
-            // Redirigir al login
-            window.location.href = "registro.html";
+            // Obtener valores del formulario
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirm-password").value.trim();
+            
+            // Validar que los campos no estén vacíos
+            if (username === "" || password === "" || confirmPassword === "") {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+            
+            // Validar que las contraseñas coincidan
+            if (password !== confirmPassword) {
+                alert("Las contraseñas no coinciden.");
+                return;
+            }
+            
+            // Realizar la petición de registro al backend
+            fetch('http://localhost:5000/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Usuario registrado exitosamente") {
+                    alert("Registro exitoso. Redirigiendo al login...");
+                    // Redirigir al login
+                    window.location.href = "login.html";
+                } else {
+                    alert(data.error || "Error en el registro");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error de conexión con el servidor");
+            });
         });
     }
 });
