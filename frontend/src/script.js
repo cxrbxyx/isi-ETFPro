@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.message === "Inicio de sesión exitoso") {
                     alert("Inicio de sesión exitoso. Redirigiendo...");
                     // Redirigir a otra página (ejemplo: dashboard.html)
-                    window.location.href = "dashboard.html";
+                    window.location.href = "cartera.html";
                 } else {
                     alert(data.error || "Error al iniciar sesión");
                 }

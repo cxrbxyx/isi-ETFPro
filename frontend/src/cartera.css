@@ -1,0 +1,93 @@
+/* Barra superior */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e5e7eb;
+    padding: 10px 20px;
+    height: 60px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* Logo pequeño */
+.logo-small {
+    width: 40px;
+    height: auto;
+}
+
+/* Botones de navegación */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px 12px;
+    color: #333;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.nav-btn:hover {
+    background: #d1d5db;
+}
+
+.nav-btn.active {
+    background: #c29939;
+    color: white;
+}
+
+/* Barra de búsqueda */
+.search {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+
+/* Campo de usuario */
+.user-display {
+    background: #f3f4f6;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Contenedor fijo en la esquina inferior derecha */
+.cartera-opciones {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column; /* Para que los botones estén uno encima del otro */
+    gap: 10px;
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Botones dorados */
+.opcion-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #e0b655;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1f2937;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.opcion-btn:hover {
+    background: #f3f4f6;
+    transform: scale(1.03);
+}
+
