@@ -28,8 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data.message === "Inicio de sesión exitoso") {
+                    // Guardar el nombre de usuario en localStorage
+                    localStorage.setItem('currentUser', data.user.username);
+                    
                     alert("Inicio de sesión exitoso. Redirigiendo...");
-                    // Redirigir a otra página (ejemplo: dashboard.html)
+                    // Redirigir a cartera.html
                     window.location.href = "cartera.html";
                 } else {
                     alert(data.error || "Error al iniciar sesión");
@@ -100,5 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Error de conexión con el servidor");
             });
         });
+    }
+    
+    // Cargar el nombre de usuario en la página de cartera
+    const userDisplay = document.querySelector(".user-display");
+    if (userDisplay) {
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            userDisplay.value = "@" + currentUser;
+        } else {
+            // Si no hay usuario conectado, redirigir al login
+            window.location.href = "login.html";
+        }
     }
 });
