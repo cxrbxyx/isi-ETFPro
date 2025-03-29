@@ -1,94 +1,153 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+.seccion-etfs {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
 }
 
-.top-bar {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+.contenido-principal {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.logo-small {
-    height: 40px;
-    margin-right: 20px;
+/* Estilos para la tabla de ETFs */
+.etf-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
 
-.nav-buttons {
-    display: flex;
-    gap: 10px;
+.etf-table th, .etf-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.nav-btn {
-    padding: 8px 16px;
-    background-color: transparent;
+.etf-table th {
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+}
+
+.etf-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Botón para ver detalles */
+.ver-detalle-btn {
+    background-color: #c9a74f;
+    color: white;
     border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
-    color: #6e6e6e;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.2s;
+    font-size: 14px;
+    transition: background-color 0.2s;
 }
 
-.nav-btn:hover {
-    color: #000;
+.ver-detalle-btn:hover {
+    background-color: #b08a33;
 }
 
-.nav-btn.active {
-    color: #000;
-    font-weight: bold;
+/* Estilos para el detalle de ETF */
+#etf-detalle {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.search {
-    margin-left: auto;
-    padding: 6px 10px;
-    width: 200px;
+#etf-detalle h2 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.user-display {
-    margin-left: 10px;
-    padding: 6px 10px;
-    background-color: #eee;
-    border: none;
-    font-weight: bold;
+.etf-info-principal {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
 
-/* 🔁 Botones de análisis y plan de inversión: estilo original */
-.floating-options {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+.precio-principal, .volumen-principal {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    z-index: 100;
 }
 
-.opcion-btn {
-    padding: 12px 18px;
-    background-color: #c9a74f
-; /* color dorado */
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 15px;
+.etiqueta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.valor {
+    font-size: 24px;
     font-weight: bold;
     color: #333;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.2s, background-color 0.2s;
 }
 
-.opcion-btn:hover {
-    background-color: #c9a74f
-    ;
-    transform: scale(1.05);
+.etf-descripcion, .etf-estadisticas, .etf-historico {
+    margin-bottom: 25px;
 }
 
+.etf-descripcion p {
+    line-height: 1.6;
+    color: #444;
+}
 
-.opcion-btn:hover {
-    background-color: #f5f5f5;
+.etf-estadisticas ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.etf-estadisticas li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Tabla de histórico */
+.tabla-historico {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-historico th, .tabla-historico td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tabla-historico th {
+    background-color: #f2f2f2;
+}
+
+.tabla-historico tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Botón para volver */
+.volver-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.volver-btn:hover {
+    background-color: #5a6268;
+}
+
+.acciones-detalle {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }

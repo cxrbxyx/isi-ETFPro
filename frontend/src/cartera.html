@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETFPro - Dashboard</title>
     <link rel="stylesheet" href="cartera.css">
+    <link rel="stylesheet" href="etf.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
@@ -24,6 +25,19 @@
         <input type="text" class="user-display" value="@usuario_actual" readonly>  
     </div>
 
+    <div class="contenido-principal">
+        <div class="seccion-etfs">
+            <h2>ETFs Disponibles</h2>
+            <div id="etf-list">
+                <!-- Aquí se cargará la lista de ETFs -->
+                <p>Cargando ETFs...</p>
+            </div>
+            <div id="etf-detalle" style="display:none;">
+                <!-- Aquí se mostrará el detalle de un ETF -->
+            </div>
+        </div>
+    </div>
+
     <div class="floating-options">
         <button class="opcion-btn">
             <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
@@ -33,8 +47,7 @@
         </button>
     </div>
 
-    </div>
-
     <script src="script.js"></script>
+    <script src="etf.js"></script>
 </body>
 </html>
