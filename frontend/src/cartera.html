@@ -5,36 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETFPro - Dashboard</title>
     <link rel="stylesheet" href="cartera.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
     <div class="top-bar">
-
         <img src="../assets/logo.png" alt="Logo" class="logo-small">
 
         <div class="nav-buttons">
-            <button class="nav-btn active">Cartera</button>
-            <button class="nav-btn">Efectivo</button>
+            <a href="cartera.html" class="nav-btn active">
+                <i class="fa-solid fa-wallet"></i> Cartera
+            </a>
+            <a href="efectivo.html" class="nav-btn">
+                <i class="fa-solid fa-money-bill-wave"></i> Efectivo
+            </a>
         </div>
 
         <input type="text" class="search" placeholder="Buscar ETFs">
-
         <input type="text" class="user-display" value="@usuario_actual" readonly>  
     </div>
 
-    <div class="opciones de la cartera">
-        
-        <div class="cartera-opciones">
-            <button class="opcion-btn">
-                <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
-            </button>
-            <button class="opcion-btn">
-                <i class="fa-solid fa-bullseye"></i> Plan de inversión
-            </button>
-        </div>
+    <div class="floating-options">
+        <button class="opcion-btn">
+            <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
+        </button>
+        <button class="opcion-btn">
+            <i class="fa-solid fa-bullseye"></i> Plan de inversión
+        </button>
+    </div>
 
     </div>
 
-    <!-- Añadir referencia al archivo script.js -->
     <script src="script.js"></script>
 </body>
 </html>

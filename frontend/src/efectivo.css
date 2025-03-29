@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.logo-small {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 8px 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #6e6e6e;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s;
+}
+
+.nav-btn:hover {
+    color: #000;
+}
+
+.nav-btn.active {
+    color: #000;
+    font-weight: bold;
+}
+
+/*.search {
+    margin-left: auto;
+    padding: 6px 10px;
+    width: 200px;
+} */
+
+.user-display {
+    margin-left: auto; /* 📌 Esto empuja el input a la derecha */
+    padding: 6px 10px;
+    background-color: #eee;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    gap: 20px;
+}
+
+.left-section, .middle-section, .right-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    flex: 1;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.saldo-label {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.saldo-valor {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.bubbles {
+    display: flex;
+    gap: 20px;
+}
+
+.bubble {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    color: white;
+    font-weight: bold;
+
+    border-radius: 50%;
+    background-color: gray;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    padding: 5px; /* ¡espacio interior para evitar cortes! */
+    box-sizing: border-box;
+}
+
+.bubble .valor {
+    font-size: 1.2em;
+    line-height: 1.1;
+}
+
+.bubble .label {
+    font-size: 0.9em;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+
+
+.green {
+    background-color: #059541;
+}
+
+.orange {
+    background-color: #c97d03;
+}
+
+.blue {
+    background-color: #005a95;
+}
+
+.middle-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.movimientos li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.right-section .op-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.op-btn:hover {
+    background-color: #ddd;
+}

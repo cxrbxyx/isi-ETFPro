@@ -1,93 +1,94 @@
-/* Barra superior */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
 .top-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: #e5e7eb;
     padding: 10px 20px;
-    height: 60px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    background-color: white;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
 }
 
-/* Logo pequeño */
 .logo-small {
-    width: 40px;
-    height: auto;
+    height: 40px;
+    margin-right: 20px;
 }
 
-/* Botones de navegación */
 .nav-buttons {
     display: flex;
     gap: 10px;
 }
 
 .nav-btn {
-    background: transparent;
+    padding: 8px 16px;
+    background-color: transparent;
     border: none;
-    font-size: 14px;
     cursor: pointer;
-    padding: 6px 12px;
-    color: #333;
-    border-radius: 4px;
-    transition: background 0.2s;
+    font-weight: bold;
+    color: #6e6e6e;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s;
 }
 
 .nav-btn:hover {
-    background: #d1d5db;
+    color: #000;
 }
 
 .nav-btn.active {
-    background: #c29939;
-    color: white;
+    color: #000;
+    font-weight: bold;
 }
 
-/* Barra de búsqueda */
 .search {
+    margin-left: auto;
     padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
     width: 200px;
 }
 
-/* Campo de usuario */
 .user-display {
-    background: #f3f4f6;
-    border: none;
+    margin-left: 10px;
     padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #333;
-}
-
-/* Contenedor fijo en la esquina inferior derecha */
-.cartera-opciones {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column; /* Para que los botones estén uno encima del otro */
-    gap: 10px;
-    z-index: 10; /* Asegura que esté por encima de otros elementos */
-}
-
-/* Botones dorados */
-.opcion-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #e0b655;
+    background-color: #eee;
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* 🔁 Botones de análisis y plan de inversión: estilo original */
+.floating-options {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 100;
+}
+
+.opcion-btn {
+    padding: 12px 18px;
+    background-color: #c9a74f
+; /* color dorado */
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 14px;
-    color: #1f2937;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: all 0.2s ease-in-out;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background-color 0.2s;
 }
 
 .opcion-btn:hover {
-    background: #f3f4f6;
-    transform: scale(1.03);
+    background-color: #c9a74f
+    ;
+    transform: scale(1.05);
 }
 
+
+.opcion-btn:hover {
+    background-color: #f5f5f5;
+}

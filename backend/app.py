@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import requests, json, jsonify
 from datetime import datetime, timedelta
 
 from User import User, db
