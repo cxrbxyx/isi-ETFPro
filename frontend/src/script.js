@@ -43,6 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    const returnButton = document.getElementById("returnButton");
+    if (returnButton) {
+        returnButton.addEventListener("click", function () {
+            window.location.href = "login.html";
+        });
+    }
+
     const confirmButton = document.getElementById("confirmButton");
 
     if (confirmButton) {

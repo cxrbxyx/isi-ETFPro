@@ -43,7 +43,7 @@
     font-size: 14px;
 }
 
-/* Botón de confirmación */
+/* Botónes */
 .confirm-btn {
     background: transparent;
     border: none;
@@ -57,7 +57,22 @@
     margin-top: 10px;
 }
 
-/* Efecto hover */
-.confirm-btn:hover {
+.return-btn {
+    background: transparent;
+    border: none;
+    color: #c29939;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.confirm-btn:hover,
+.return-btn:hover {
+    color: #b08a33;
     text-decoration: underline;
 }
+
