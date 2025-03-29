@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingresar dinero</title>
+  <link rel="stylesheet" href="ingresar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="ventana-ingreso">
+    <h2>Ingresar dinero</h2>
+
+    <input type="text" class="user-display" value="@usuario_actual" readonly />
+
+    <label for="metodo">Método de pago</label>
+    <select id="metodo">
+      <option value="">Elija un método de pago</option>
+      <option value="transferencia">Transferencia</option>
+      <option value="tarjeta">Tarjeta</option>
+      <option value="paypal">PayPal</option>
+    </select>
+
+    <label for="cantidad">Cantidad a ingresar</label>
+    <input type="text" id="cantidad" placeholder="0 €" />
+
+    <label for="cuenta">Cuenta desde la que se ingresa</label>
+    <input type="text" id="cuenta" placeholder="ES00 0000 0000 0000 0000 0000" />
+
+    <div class="acciones">
+      <button class="cancelar-btn" onclick="window.close()">
+        <i class="fa-solid fa-xmark"></i> Cancelar
+      </button>
+      <button class="ingresar-btn" id="btnIngresar">
+        <i class="fa-solid fa-circle-arrow-down"></i> Ingresar
+      </button>
+    </div>
+  </div>
+  
+
+  <script>
+    document.getElementById("btnIngresar").addEventListener("click", function () {
+        const cantidadStr = document.getElementById("cantidad").value.trim();
+        const cantidad = parseFloat(cantidadStr.replace("€", "").replace(",", "."));
+
+        if (isNaN(cantidad) || cantidad <= 0) {
+            alert("Introduce una cantidad válida.");
+            return;
+        }
+
+        let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 0;
+
+        saldo += cantidad;
+        localStorage.setItem("saldoDisponible", saldo.toFixed(2));
+
+        window.location.href = "efectivo.html";
+    });
+  </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

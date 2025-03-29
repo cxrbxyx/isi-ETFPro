@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enviar dinero</title>
+  <link rel="stylesheet" href="enviar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="ventana-envio">
+    <h2>Enviar dinero</h2>
+
+    <input type="text" class="user-display" value="@usuario_actual" readonly />
+    
+    <label for="destinatario">Destinatario</label>
+    <input type="text" id="destinatario" placeholder="ES00 0000 0000 0000 0000 0000" />
+
+    <label for="cantidad">Cantidad a enviar</label>
+    <input type="text" id="cantidad" placeholder="0 €" />
+
+    <label for="cuenta">Cuenta de la que enviar</label>
+    <input type="text" id="cuenta" placeholder="ES00 0000 0000 0000 0000 0000" />
+
+    <div class="acciones">
+      <button class="cancelar-btn" onclick="window.close()">
+        <i class="fa-solid fa-xmark"></i> Cancelar
+      </button>
+      <button class="enviar-btn" id="btnEnviar">
+        <i class="fa-solid fa-paper-plane"></i> Enviar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("btnEnviar").addEventListener("click", function () {
+        const cantidadStr = document.getElementById("cantidad").value.trim();
+        const cantidad = parseFloat(cantidadStr.replace("€", "").replace(",", "."));
+
+        if (isNaN(cantidad) || cantidad <= 0) {
+            alert("Introduce una cantidad válida.");
+            return;
+        }
+
+        let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 0;
+
+        if (cantidad > saldo) {
+            alert("Saldo insuficiente.");
+            return;
+        }
+
+        saldo -= cantidad;
+        localStorage.setItem("saldoDisponible", saldo.toFixed(2));
+
+        window.location.href = "efectivo.html";
+    });
+  </script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
