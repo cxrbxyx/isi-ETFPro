@@ -1,23 +1,17 @@
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
-
-import requests, json, jsonify
-from datetime import datetime, timedelta
-
-from User import User, db
-
 try:
     import pandas as pd
     import matplotlib.pyplot as plt
-    PANDAS_INSTALLED = True
+    from flask import Flask, request, jsonify
+    from flask_sqlalchemy import SQLAlchemy
+    from flask_cors import CORS
+    from werkzeug.security import generate_password_hash, check_password_hash
 except ImportError:
-    PANDAS_INSTALLED = False
-    print("AVISO: pandas y/o matplotlib no están instalados.")
-    print("Para visualización y análisis de datos avanzados, instálalos con:")
-    print("pip install pandas matplotlib")
-    print("Continuando con funcionalidad básica...\n")
+    print("AVISO: Instala los módulos requeridos para la funcionalidad completa.")
+    print("pip install backend/requeriments.txt")
+    exit(1)
+
+from datetime import datetime, timedelta
+from User import User, db
 
 app = Flask(__name__)
 CORS(app)  # Permitir solicitudes desde el frontend
