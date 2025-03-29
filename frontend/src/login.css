@@ -1,0 +1,89 @@
+/* Estilos generales */
+body {
+    background-color: #0a0e1a;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor del login */
+.login-container {
+    background: #1b1f32;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Logo */
+.logo {
+    width: 100px;
+    margin-bottom: 5px;
+}
+
+/* Contenedor de cada campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo a la izquierda */
+    width: 80%; /* Asegura que todo tenga el mismo ancho */
+    margin: 0 auto 20px auto; /* Mantiene la separación entre los campos */
+}
+
+/* Etiquetas de los campos */
+.form-group label {
+    font-size: 14px; /* Ajustar tamaño del texto */
+    margin-bottom: 5px;
+    text-align: left; /* Asegurar alineación del texto */
+    width: 100%;    /* Asegurar que el texto ocupe todo el ancho */
+}
+
+/* Campos de entrada */
+.input {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #2b2f45;
+    color: white;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+/* Contenedor de los botones */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    margin-top: 15px;
+}
+
+/* Estilos de los botones SIN fondo y con letras doradas */
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent; 
+    border: 2px solid transparent; 
+    color: #c29939; 
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+/* Titulo ETFPro estilo */
+h1 {
+    margin-top: 20px; /* Ajusta este valor para subir más o menos */
+    margin-bottom: 30px; /* Ajusta este valor para bajar más o menos */
+    color: #c29939;
+}
+
+/* Efecto hover */
+.btn:hover {
+    text-decoration: underline;
+}

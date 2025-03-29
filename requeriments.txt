@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy >=2.5
+pandas
+matplotlib
+flask-CORS
+requests

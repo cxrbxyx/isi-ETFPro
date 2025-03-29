@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Análisis de la Cartera</title>
+  <link rel="stylesheet" href="analisis.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="top-bar">
+    <div class="top-left">
+      <img src="../assets/logo.png" alt="Logo" class="logo-big">
+      <div class="nav-buttons">
+        <a href="cartera.html" class="nav-btn active">
+          <i class="fa-solid fa-wallet"></i> Cartera
+        </a>
+        <a href="efectivo.html" class="nav-btn">
+          <i class="fa-solid fa-money-bill-wave"></i> Efectivo
+        </a>
+      </div>
+    </div>
+    <div class="top-right">
+      <input type="text" class="search" placeholder="Buscar ETFs">
+      <input type="text" class="user-display" value="@Pablo" readonly>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="contenido-analisis">
+    <div class="columna grafica">
+      <h3><i class="fa-solid fa-chart-pie"></i> Gráfica de ETFs</h3>
+      <canvas id="graficoCartera" width="320" height="320"></canvas>
+      <p class="total-invertido">Total invertido: 500 €</p>
+    </div>
+
+    <div class="columna mis-etfs">
+      <h3><i class="fa-solid fa-bars"></i> Mis ETFs</h3>
+      <ul class="lista-etfs">
+        <li>S&P 500 USD (Dist)</li>
+        <li>Core MSCI World USD (Acc)</li>
+        <li>MSCI World USD (Acc)</li>
+        <li>MSCI World USD (Acc)</li>
+      </ul>
+    </div>
+
+    <div class="columna operaciones">
+      <h3><i class="fa-solid fa-sliders"></i> Operaciones</h3>
+      
+      <button id="btnComprarEtfs" class="boton-operacion">
+        <i class="fa-solid fa-lock"></i> Comprar ETFs
+      </button>
+       
+      <button id="btnIngresarDinero" class="boton-operacion">
+        <i class="fa-solid fa-plus"></i> Ingresar dinero
+      </button>
+      >
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

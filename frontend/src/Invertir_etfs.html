@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Invertir en ETFs</title>
+  <link rel="stylesheet" href="invertir_etfs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="top-bar">
+    <img src="../assets/logo.png" alt="Logo" class="logo-small">
+    <input type="text" class="search" placeholder="Buscar ETFs">
+    <input type="text" class="user-display" value="@usuario_actual" readonly>
+  </div>
+
+  <div class="contenido-principal">
+    <h1>Inversiones Disponibles</h1>
+
+    <div class="layout">
+      <!-- Tabla de ETFs -->
+      <table class="tabla-etfs">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Rendimiento</th>
+            <th>Sector</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>S&P 500 USD</td>
+            <td>$420</td>
+            <td>+8.5%</td>
+            <td>Tecnología</td>
+          </tr>
+          <tr>
+            <td>MSCI World USD</td>
+            <td>$350</td>
+            <td>+12.1%</td>
+            <td>Índices</td>
+          </tr>
+          <tr>
+            <td>Nasdaq 100</td>
+            <td>$390</td>
+            <td>+10.2%</td>
+            <td>Crecimiento</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Formulario de inversión -->
+      <div class="formulario">
+        <h2>Formulario de Inversión</h2>
+      
+        <label for="etf">ETF Seleccionado:</label>
+        <select id="etf" onchange="actualizarPrecio()">
+          <option value="" disabled selected>-- Selecciona un ETF --</option>
+          <option value="420">S&P 500 USD</option>
+          <option value="350">MSCI World USD</option>
+          <option value="390">Nasdaq 100</option>
+        </select>
+      
+        <p><strong>Precio por unidad:</strong> $<span id="precio">---</span></p>
+      
+        <label for="monto">Monto a Invertir ($):</label>
+        <input type="number" id="monto" oninput="calcularCantidad()">
+      
+        <p><strong>Cantidad de ETFs:</strong> <span id="cantidad">---</span></p>
+        <p><strong>Saldo Disponible:</strong> $<span id="saldo">5000</span></p>
+      
+        <div class="acciones">
+          <button class="cancelar"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+          <button class="confirmar"><i class="fa-solid fa-circle-check"></i> Confirmar Inversión</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+</body>
+</html>

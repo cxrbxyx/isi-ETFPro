@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: white;
+  }
+  
+  /* TOP BAR */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px 30px;
+    height: 80px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  }
+  
+  .top-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .logo-big {
+    height: 45px;
+    width: 45px;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #6e6e6e;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+  }
+  
+  .nav-btn.active {
+    color: black;
+  }
+  
+  .top-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .search {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    width: 200px;
+    height: 38px;
+    box-sizing: border-box;
+  }
+  
+  .user-display {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* CONTENIDO PRINCIPAL */
+  .contenido-analisis {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 60px 80px;
+    gap: 80px;
+  }
+  
+  .columna {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .columna h3 {
+    margin-top: 0;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+    margin-bottom: 25px;
+  }
+  
+  .lista-etfs {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .lista-etfs li {
+    margin-bottom: 14px;
+    font-weight: 500;
+    font-size: 17px;
+  }
+  
+  .boton-operacion {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: black;
+    text-align: center;
+    text-decoration: none; /* <-- quita el subrayado */
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .boton-operacion:hover {
+    background-color: #eee;
+  }
+  
+  
+  .total-invertido {
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+  }
+  

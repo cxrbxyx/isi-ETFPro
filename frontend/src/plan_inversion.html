@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Plan de Inversión</title>
+  <link rel="stylesheet" href="plan_inversion.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="top-left">
+      <img src="../assets/logo.png" alt="Logo" class="logo-big">
+      <div class="nav-buttons">
+        <a href="cartera.html" class="nav-btn active"><i class="fa-solid fa-wallet"></i> Cartera</a>
+        <a href="efectivo.html" class="nav-btn"><i class="fa-solid fa-money-bill-wave"></i> Efectivo</a>
+      </div>
+    </div>
+    <div class="top-right">
+      <input type="text" class="search" placeholder="Buscar ETFs">
+      <input type="text" class="user-display" value="@Usuario_actual" readonly>
+    </div>
+  </div>
+
+  <div class="contenido-plan">
+    <div class="columna">
+      <h3>Seleccione una ETF</h3>
+      <ul class="lista-etfs">
+        <li><a href="#">S&P 500 USD (Dist)</a></li>
+        <li><a href="#">Core MSCI World USD (Acc)</a></li>
+        <li><a href="#">MSCI World USD (Acc)</a></li>
+        <li><a href="#">MSCI World USD (Acc)</a></li>
+        <li><a href="#">AI & Big Data USD (Acc)</a></li>
+      </ul>
+    </div>
+
+    <div class="columna">
+      <h3>Cantidad a invertir</h3>
+      <div class="botones-cantidad">
+        <button>30 €</button>
+        <button>50 €</button>
+        <button>100 €</button>
+        <button>200 €</button>
+      </div>
+      <input type="text" placeholder="Otra cantidad €" class="input-cantidad">
+    </div>
+
+    <div class="columna">
+      <h3>Periodicidad de la inversión</h3>
+      <div class="botones-periodo">
+        <button>Cada 15 días</button>
+        <button>Cada mes</button>
+      </div>
+      <input type="text" placeholder="Introduzca una cantidad en días" class="input-periodo">
+    </div>
+  </div>
+
+</div>
+
+<div class="acciones">
+  <button class="cancelar"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+  <button id="crearPlanBtn" class="confirmar"><i class="fa-solid fa-rocket"></i> Crear plan</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let etfSeleccionado = null;
+
+    // Selección de ETF
+    document.querySelectorAll(".etf-option").forEach((etf) => {
+      etf.addEventListener("click", function (e) {
+        e.preventDefault();
+        etfSeleccionado = this.textContent;
+        alert("Seleccionado: " + etfSeleccionado);
+      });
+    });
+
+    document.getElementById("crearPlanBtn").addEventListener("click", function () {
+      const cantidad = document.getElementById("cantidad").value.trim();
+      const periodicidad = document.getElementById("periodicidad").value.trim();
+      const usuario = localStorage.getItem("currentUser");
+
+      if (!usuario) {
+        alert("No se ha iniciado sesión.");
+        return;
+      }
+
+      if (!etfSeleccionado || cantidad === "" || periodicidad === "") {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      const plan = {
+        usuario: usuario,
+        etf: etfSeleccionado,
+        cantidad: cantidad,
+        periodicidad: periodicidad
+      };
+
+      let planesGuardados = JSON.parse(localStorage.getItem("planesInversion")) || [];
+      planesGuardados.push(plan);
+      localStorage.setItem("planesInversion", JSON.stringify(planesGuardados));
+
+      alert("¡Plan guardado correctamente!");
+      window.location.href = "cartera.html";
+    });
+  });
+</script>
+</body>
+</html>
+
