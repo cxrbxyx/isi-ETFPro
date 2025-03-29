@@ -36,7 +36,7 @@ db.init_app(app)
 # Configuración de las API keys para Alpha Vantage y Tiingo
 # Asegúrate de reemplazar estos valores con tus propias claves
 ALPHA_VANTAGE_API_KEY = ""  # Reemplaza con tu API key real
-TIINGO_API_TOKEN = "002b0fd7f6e1ec89aee49480a9a66f1292498074"  # Reemplaza con tu token real
+TIINGO_API_TOKEN = ""  # Reemplaza con tu token real
 
 # URL base para las APIs
 base_url_alphavantage = "https://www.alphavantage.co/query"
