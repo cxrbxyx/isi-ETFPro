@@ -9,7 +9,7 @@ try:
     from werkzeug.security import generate_password_hash, check_password_hash
 except ImportError:
     print("AVISO: Instala los módulos requeridos para la funcionalidad completa.")
-    print("pip install -r requeriments.txt")
+    print(" Para instalarlo, crea un entorno virtual y ejecuta este comando en la carpeta raiz del proyecto:\npip install -r requeriments.txt")
     exit(1)
 
 from datetime import datetime, timedelta
@@ -35,74 +35,193 @@ db.init_app(app)
 
 # Configuración de las API keys para Alpha Vantage y Tiingo
 # Asegúrate de reemplazar estos valores con tus propias claves
-ALPHA_VANTAGE_API_KEY = ""  # Reemplaza con tu API key real
-TIINGO_API_TOKEN = ""  # Reemplaza con tu token real
+ALPHA_VANTAGE_API_KEY = "3SKB8KZPR5NATZ7X"  # Reemplaza con tu API key real
+TIINGO_API_TOKEN = "002b0fd7f6e1ec89aee49480a9a66f1292498074"  # Reemplaza con tu token real
 
 # URL base para las APIs
 base_url_alphavantage = "https://www.alphavantage.co/query"
 base_url_tiingo = "https://api.tiingo.com"
 
-def obtener_y_almacenar_etfs():
+def obtener_y_almacenar_etfs(actualizar_todos=False):
     """
     Obtiene los ETFs disponibles de la API Tiingo y los almacena en la base de datos.
-    Esta función se ejecutará al iniciar la aplicación.
+    
+    Args:
+        actualizar_todos (bool): Si es True, actualiza todos los ETFs aunque estén recientes.
+                                 Si es False, solo actualiza los ETFs sin datos de precio recientes.
+    
+    Returns:
+        tuple: (etfs_nuevos, etfs_actualizados) Cantidad de ETFs nuevos y actualizados.
     """
     print("Iniciando obtención de ETFs desde Tiingo...")
     
-    # Lista de símbolos de ETFs populares para solicitar (puedes ampliarla)
+    # Lista de símbolos de ETFs populares para solicitar
     etfs_populares = [
         "SPY", "VOO", "QQQ", "VTI", "IWM", "EFA", "VWO", "GLD", 
-        "VEA", "BND", "VIG", "VTV", "VUG", "VNQ", "XLF", "IEMG"
+        "VEA", "BND", "VIG", "VTV", "VUG", "VNQ", "XLF", "IEMG",
+        "AGG", "IJR", "IJH", "LQD", "TLT", "SCHD", "VCIT", "VCSH"
     ]
     
-    etfs_guardados = 0
-    etfs_actualizados = 0
+    stats = {"nuevos": 0, "actualizados": 0, "errores": 0}
+    
+    # Fechas para la solicitud de precios
+    fecha_fin = datetime.now().strftime('%Y-%m-%d')
+    fecha_inicio = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
     
     for simbolo in etfs_populares:
         try:
-            # URL para obtener información del ETF
-            url = f"{base_url_tiingo}/tiingo/daily/{simbolo}"
-            
-            # Parámetros de la solicitud
-            params = {
-                'token': TIINGO_API_TOKEN
-            }
-            
-            # Realizar la solicitud para obtener información básica
-            respuesta = requests.get(url, params=params)
-            respuesta.raise_for_status()
-            info_etf = respuesta.json()
-            
-            # Verificar si ya existe este ETF en la base de datos
+            # Verificar si el ETF ya existe en la base de datos
             etf_existente = ETF.query.filter_by(symbol=simbolo).first()
             
+            # Si el ETF existe y tiene precios recientes, podemos omitir la actualización
+            if not actualizar_todos and etf_existente and etf_existente.price_date:
+                dias_desde_actualizacion = (datetime.now() - etf_existente.price_date).days
+                if dias_desde_actualizacion < 1:  # Si se actualizó hoy, omitir
+                    print(f"Omitiendo ETF {simbolo} - ya está actualizado (hace {dias_desde_actualizacion} días)")
+                    continue
+            
+            # Obtener info básica y precios del ETF
+            info_etf, precio_actual, volumen_actual, fecha_precio = _obtener_datos_etf(
+                simbolo, 
+                fecha_inicio, 
+                fecha_fin
+            )
+            
             if etf_existente:
-                # Actualizar la información existente
-                etf_existente.name = info_etf.get('name', f"ETF {simbolo}")
-                etf_existente.description = info_etf.get('description', '')
-                etf_existente.last_update = datetime.now()
-                etfs_actualizados += 1
+                # Actualizar ETF existente
+                _actualizar_etf_existente(
+                    etf_existente, 
+                    info_etf, 
+                    precio_actual, 
+                    volumen_actual, 
+                    fecha_precio
+                )
+                stats["actualizados"] += 1
+                print(f"ETF {simbolo} actualizado con precio: {precio_actual}, volumen: {volumen_actual}")
             else:
-                # Crear un nuevo registro
-                nuevo_etf = ETF(
-                    symbol=simbolo,
-                    name=info_etf.get('name', f"ETF {simbolo}"),
-                    description=info_etf.get('description', ''),
-                    category=info_etf.get('assetType', 'ETF')
+                # Crear nuevo ETF
+                nuevo_etf = _crear_nuevo_etf(
+                    simbolo, 
+                    info_etf, 
+                    precio_actual, 
+                    volumen_actual, 
+                    fecha_precio
                 )
                 db.session.add(nuevo_etf)
-                etfs_guardados += 1
+                stats["nuevos"] += 1
+                print(f"Nuevo ETF {simbolo} añadido con precio: {precio_actual}, volumen: {volumen_actual}")
             
             # Guardar cambios
             db.session.commit()
-            print(f"ETF {simbolo} procesado correctamente.")
             
         except Exception as e:
-            print(f"Error procesando ETF {simbolo}: {str(e)}")
             db.session.rollback()
+            stats["errores"] += 1
+            print(f"Error procesando ETF {simbolo}: {str(e)}")
     
-    print(f"Proceso completado. ETFs nuevos: {etfs_guardados}, ETFs actualizados: {etfs_actualizados}")
-    return etfs_guardados, etfs_actualizados
+    print(f"Proceso completado. ETFs nuevos: {stats['nuevos']}, actualizados: {stats['actualizados']}, errores: {stats['errores']}")
+    return stats["nuevos"], stats["actualizados"]
+
+
+def _obtener_datos_etf(simbolo, fecha_inicio, fecha_fin):
+    """
+    Función auxiliar para obtener información y precios de un ETF.
+    
+    Args:
+        simbolo (str): Símbolo del ETF.
+        fecha_inicio (str): Fecha de inicio en formato YYYY-MM-DD.
+        fecha_fin (str): Fecha de fin en formato YYYY-MM-DD.
+        
+    Returns:
+        tuple: (info_etf, precio_actual, volumen_actual, fecha_precio)
+    """
+    # 1. Obtener información básica del ETF
+    url_info = f"{base_url_tiingo}/tiingo/daily/{simbolo}"
+    params_info = {'token': TIINGO_API_TOKEN}
+    
+    respuesta_info = requests.get(url_info, params_info)
+    respuesta_info.raise_for_status()
+    info_etf = respuesta_info.json()
+    
+    # 2. Obtener precios recientes
+    url_precios = f"{base_url_tiingo}/tiingo/daily/{simbolo}/prices"
+    params_precios = {
+        'startDate': fecha_inicio,
+        'endDate': fecha_fin,
+        'format': 'json',
+        'token': TIINGO_API_TOKEN
+    }
+    
+    respuesta_precios = requests.get(url_precios, params_precios)
+    respuesta_precios.raise_for_status()
+    datos_precios = respuesta_precios.json()
+    
+    # 3. Extraer precio y volumen más recientes
+    precio_actual = None
+    volumen_actual = None
+    fecha_precio = None
+    
+    if datos_precios and len(datos_precios) > 0:
+        # Ordenar por fecha (más reciente primero)
+        datos_precios.sort(key=lambda x: x.get('date', ''), reverse=True)
+        dato_reciente = datos_precios[0]
+        
+        precio_actual = dato_reciente.get('close')
+        volumen_actual = dato_reciente.get('volume')
+        fecha_precio = datetime.strptime(dato_reciente.get('date', '')[:10], '%Y-%m-%d')
+    
+    return info_etf, precio_actual, volumen_actual, fecha_precio
+
+
+def _actualizar_etf_existente(etf, info_etf, precio_actual, volumen_actual, fecha_precio):
+    """
+    Actualiza un ETF existente con nueva información.
+    
+    Args:
+        etf (ETF): Objeto ETF existente.
+        info_etf (dict): Información básica del ETF.
+        precio_actual (float): Precio de cierre más reciente.
+        volumen_actual (int): Volumen más reciente.
+        fecha_precio (datetime): Fecha del precio más reciente.
+    """
+    etf.name = info_etf.get('name', f"ETF {etf.symbol}")
+    etf.description = info_etf.get('description', '')
+    etf.category = info_etf.get('assetType', 'ETF')
+    
+    # Actualizar precio y volumen solo si hay datos nuevos
+    if precio_actual is not None:
+        etf.current_price = precio_actual
+    if volumen_actual is not None:
+        etf.current_volume = volumen_actual
+    if fecha_precio is not None:
+        etf.price_date = fecha_precio
+    
+    etf.last_update = datetime.now()
+
+
+def _crear_nuevo_etf(simbolo, info_etf, precio_actual, volumen_actual, fecha_precio):
+    """
+    Crea un nuevo objeto ETF.
+    
+    Args:
+        simbolo (str): Símbolo del ETF.
+        info_etf (dict): Información básica del ETF.
+        precio_actual (float): Precio de cierre más reciente.
+        volumen_actual (int): Volumen más reciente.
+        fecha_precio (datetime): Fecha del precio más reciente.
+        
+    Returns:
+        ETF: Nuevo objeto ETF.
+    """
+    return ETF(
+        symbol=simbolo,
+        name=info_etf.get('name', f"ETF {simbolo}"),
+        description=info_etf.get('description', ''),
+        category=info_etf.get('assetType', 'ETF'),
+        current_price=precio_actual,
+        current_volume=volumen_actual,
+        price_date=fecha_precio
+    )
 
 # Crear la base de datos (solo la primera vez)
 # Crear la base de datos y actualizar datos al iniciar la aplicación
@@ -114,15 +233,15 @@ with app.app_context():
         print("No se encontraron ETFs en la base de datos. Obteniendo datos iniciales...")
         obtener_y_almacenar_etfs()
     else:
-        # Verificar si necesitamos actualizar los precios (si han pasado más de 24 horas desde la última actualización)
-        etf_muestra = ETF.query.first()
-        ultima_actualizacion = etf_muestra.last_update if etf_muestra else None
+        # Verificar si necesitamos actualizar algún ETF sin precios o con precios antiguos
+        etfs_sin_precios = ETF.query.filter(ETF.current_price.is_(None)).count()
+        etfs_antiguos = ETF.query.filter(ETF.price_date < (datetime.now() - timedelta(days=1))).count()
         
-        if not ultima_actualizacion or (datetime.now() - ultima_actualizacion).total_seconds() > 86400:  # 24 horas en segundos
-            print(f"Actualizando precios y volúmenes de {etf_count} ETFs existentes...")
+        if etfs_sin_precios > 0 or etfs_antiguos > 0:
+            print(f"Actualizando ETFs: {etfs_sin_precios} sin precios, {etfs_antiguos} con precios antiguos...")
             obtener_y_almacenar_etfs()
         else:
-            print(f"ETFs ya están actualizados. Última actualización: {ultima_actualizacion}")
+            print(f"Todos los {etf_count} ETFs tienen precios actualizados.")
 
 # Ruta para registrar un nuevo usuario
 @app.route('/api/register', methods=['POST'])
@@ -164,137 +283,29 @@ def login():
 
     return jsonify({"message": "Inicio de sesión exitoso", "user": {"username": user.username}}), 200
 
-
-
-
-def obtener_y_almacenar_etfs():
-    """
-    Obtiene los ETFs disponibles de la API Tiingo y los almacena en la base de datos.
-    Esta función se ejecutará al iniciar la aplicación.
-    """
-    print("Iniciando obtención de ETFs desde Tiingo...")
-    
-    # Lista de símbolos de ETFs populares para solicitar (puedes ampliarla)
-    etfs_populares = [
-        "SPY", "VOO", "QQQ", "VTI", "IWM", "EFA", "VWO", "GLD", 
-        "VEA", "BND", "VIG", "VTV", "VUG", "VNQ", "XLF", "IEMG"
-    ]
-    
-    etfs_guardados = 0
-    etfs_actualizados = 0
-    
-    # Fecha para obtener datos de precios (hoy)
-    fecha_fin = datetime.now().strftime('%Y-%m-%d')
-    # Fecha una semana atrás (para asegurar tener datos)
-    fecha_inicio = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
-    
-    for simbolo in etfs_populares:
-        try:
-            # URL para obtener información básica del ETF
-            url_info = f"{base_url_tiingo}/tiingo/daily/{simbolo}"
-            
-            # Parámetros de la solicitud de información
-            params_info = {
-                'token': TIINGO_API_TOKEN
-            }
-            
-            # Realizar la solicitud para obtener información básica
-            respuesta_info = requests.get(url_info, params=params_info)
-            respuesta_info.raise_for_status()
-            info_etf = respuesta_info.json()
-            
-            # URL para obtener precios recientes
-            url_precios = f"{base_url_tiingo}/tiingo/daily/{simbolo}/prices"
-            
-            # Parámetros para la solicitud de precios
-            params_precios = {
-                'startDate': fecha_inicio,
-                'endDate': fecha_fin,
-                'format': 'json',
-                'token': TIINGO_API_TOKEN
-            }
-            
-            # Realizar la solicitud para obtener precios
-            respuesta_precios = requests.get(url_precios, params=params_precios)
-            respuesta_precios.raise_for_status()
-            datos_precios = respuesta_precios.json()
-            
-            # Obtener el precio y volumen más reciente si hay datos disponibles
-            precio_actual = None
-            volumen_actual = None
-            fecha_precio = None
-            
-            if datos_precios and len(datos_precios) > 0:
-                # Ordenar por fecha (más reciente primero)
-                datos_precios.sort(key=lambda x: x.get('date', ''), reverse=True)
-                dato_reciente = datos_precios[0]
-                
-                precio_actual = dato_reciente.get('close')
-                volumen_actual = dato_reciente.get('volume')
-                fecha_precio = datetime.strptime(dato_reciente.get('date', '')[:10], '%Y-%m-%d')
-            
-            # Verificar si ya existe este ETF en la base de datos
-            etf_existente = ETF.query.filter_by(symbol=simbolo).first()
-            
-            if etf_existente:
-                # Actualizar la información existente
-                etf_existente.name = info_etf.get('name', f"ETF {simbolo}")
-                etf_existente.description = info_etf.get('description', '')
-                etf_existente.category = info_etf.get('assetType', 'ETF')
-                
-                # Actualizar precio y volumen
-                etf_existente.current_price = precio_actual
-                etf_existente.current_volume = volumen_actual
-                etf_existente.price_date = fecha_precio
-                
-                etf_existente.last_update = datetime.now()
-                etfs_actualizados += 1
-                
-                print(f"ETF {simbolo} actualizado con precio: {precio_actual}, volumen: {volumen_actual}")
-            else:
-                # Crear un nuevo registro
-                nuevo_etf = ETF(
-                    symbol=simbolo,
-                    name=info_etf.get('name', f"ETF {simbolo}"),
-                    description=info_etf.get('description', ''),
-                    category=info_etf.get('assetType', 'ETF'),
-                    current_price=precio_actual,
-                    current_volume=volumen_actual,
-                    price_date=fecha_precio
-                )
-                db.session.add(nuevo_etf)
-                etfs_guardados += 1
-                
-                print(f"Nuevo ETF {simbolo} añadido con precio: {precio_actual}, volumen: {volumen_actual}")
-            
-            # Guardar cambios
-            db.session.commit()
-            print(f"ETF {simbolo} procesado correctamente.")
-            
-        except Exception as e:
-            print(f"Error procesando ETF {simbolo}: {str(e)}")
-            db.session.rollback()
-    
-    print(f"Proceso completado. ETFs nuevos: {etfs_guardados}, ETFs actualizados: {etfs_actualizados}")
-    return etfs_guardados, etfs_actualizados
-
 # Ruta para forzar la actualización de ETFs manualmente
 @app.route('/api/admin/actualizar-etfs', methods=['POST'])
 def actualizar_etfs_endpoint():
-    nuevos, actualizados = obtener_y_almacenar_etfs()
-    return jsonify({
-        "mensaje": "Actualización de ETFs completada",
-        "nuevos": nuevos,
-        "actualizados": actualizados
-    }), 200
-    
+    """
+    Fuerza la actualización de todos los ETFs, incluso los que tienen datos recientes.
+    """
+    try:
+        nuevos, actualizados = obtener_y_almacenar_etfs(actualizar_todos=True)
+        return jsonify({
+            "mensaje": "Actualización de ETFs completada con éxito",
+            "nuevos": nuevos,
+            "actualizados": actualizados
+        }), 200
+    except Exception as e:
+        return jsonify({
+            "error": f"Error en la actualización de ETFs: {str(e)}"
+        }), 500
+
 @app.route('/api/etfs', methods=['GET'])
 def listar_etfs():
     etfs = ETF.query.all()
     resultado = [etf.to_dict() for etf in etfs]
     return jsonify({"etfs": resultado}), 200
-
-
 
 @app.route('/api/etf/<string:simbolo>', methods=['GET'])
 def obtener_etf(simbolo):
@@ -377,8 +388,6 @@ def obtener_precios_etf(simbolo):
         
     except Exception as e:
         return jsonify({"error": f"Error al obtener precios: {str(e)}"}), 500
-
-
 
 # Iniciar el servidor
 if __name__ == '__main__':

@@ -1,84 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Efectivo - ETFPro</title>
-  <link rel="stylesheet" href="efectivo.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body>
-  <div class="top-bar">
-    <img src="../assets/logo.png" alt="Logo" class="logo-small" />
-    
-    <div class="nav-buttons">
-      <a href="cartera.html" class="nav-btn">
-        <i class="fa-solid fa-wallet"></i> Cartera
-      </a>
-      <a href="efectivo.html" class="nav-btn active">
-        <i class="fa-solid fa-money-bill-wave"></i> Efectivo
-      </a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Efectivo - ETFPro</title>
+    <link rel="stylesheet" href="efectivo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="top-bar">
+      <img src="../assets/logo.png" alt="Logo" class="logo-small" />
+
+      <div class="nav-buttons">
+        <a href="cartera.html" class="nav-btn">
+          <i class="fa-solid fa-wallet"></i> Cartera
+        </a>
+        <a href="efectivo.html" class="nav-btn active">
+          <i class="fa-solid fa-money-bill-wave"></i> Efectivo
+        </a>
+      </div>
+
+      <!-- input type="text" class="search" placeholder="Buscar ETFs" /> -->
+
+      <input
+        type="text"
+        class="user-display"
+        value="@usuario_actual"
+        readonly
+      />
     </div>
 
-    <!-- input type="text" class="search" placeholder="Buscar ETFs" /> -->
+    <div class="main-container">
+      <div class="left-section">
+        <p class="saldo-label">Saldo Disponible</p>
+        <h1 class="saldo-valor">500 €</h1>
 
-    <input type="text" class="user-display" value="@usuario_actual" readonly />
-</div>
-
-  <div class="main-container">
-    <div class="left-section">
-      <p class="saldo-label">Saldo Disponible</p>
-      <h1 class="saldo-valor">500 €</h1>
-     
-      <div class="bubbles">
-        <div class="bubble green">
-          <span class="valor"></span>
-          <span class="label">Ingresos</span>
-        </div>
-        <div class="bubble orange">
-          <span class="valor"></span>
-          <span class="label">Gastos</span>
-        </div>
-        <div class="bubble blue">
-          <span class="valor"></span>
-          <span class="label">Inversiones</span>
+        <div class="bubbles">
+          <div class="bubble green">
+            <span class="valor"></span>
+            <span class="label">Ingresos</span>
+          </div>
+          <div class="bubble orange">
+            <span class="valor"></span>
+            <span class="label">Gastos</span>
+          </div>
+          <div class="bubble blue">
+            <span class="valor"></span>
+            <span class="label">Inversiones</span>
+          </div>
         </div>
       </div>
-      
-      
-    </div>
 
-    <div class="middle-section">
-      <h3>Movimientos</h3>
-      <ul class="movimientos">
-        <li>🛒 Aliexpress</li>
-        <li>💰 Interés</li>
-        <li>💵 S&P 500 USD</li>
-        <li>📈 Vanguard FTSE All-World</li>
-        <li>💼 iShares Euro Stoxx 50</li>
-        <li>🌍 Core MSCI World USD (Acc)</li>
-      </ul>
-    </div>
+      <div class="middle-section">
+        <h3>Movimientos</h3>
+        <ul class="movimientos">
+          <li>🛒 Aliexpress</li>
+          <li>💰 Interés</li>
+          <li>💵 S&P 500 USD</li>
+          <li>📈 Vanguard FTSE All-World</li>
+          <li>💼 iShares Euro Stoxx 50</li>
+          <li>🌍 Core MSCI World USD (Acc)</li>
+        </ul>
+      </div>
 
-    <div class="right-section">
-      <h3>Operaciones</h3>
-      <div class="operaciones">
-        <button class="op-btn" onclick="window.open('enviar.html', '_blank')">
+      <div class="right-section">
+        <h3>Operaciones</h3>
+        <div class="operaciones">
+          <button class="op-btn" onclick="window.open('enviar.html', '_blank')">
             ➖ Enviar
           </button>
-          
-        <button class="op-btn" onclick="window.open('ingresar.html', '_blank')">
-        ➕ Ingresar
-        </button>
 
-        <button class="op-btn">🔁 Invertir</button>
+          <button
+            class="op-btn"
+            onclick="window.open('ingresar.html', '_blank')"
+          >
+            ➕ Ingresar
+          </button>
+
+          <button class="op-btn">🔁 Invertir</button>
+        </div>
       </div>
-
-
-
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

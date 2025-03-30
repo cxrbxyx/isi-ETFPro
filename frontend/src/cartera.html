@@ -1,73 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ETFPro - Dashboard</title>
-    <link rel="stylesheet" href="cartera.css">
-    <link rel="stylesheet" href="etf.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body>
+    <link rel="stylesheet" href="cartera.css" />
+    <link rel="stylesheet" href="etf.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="top-bar">
-        <img src="../assets/logo.png" alt="Logo" class="logo-small">
+      <img src="../assets/logo.png" alt="Logo" class="logo-small" />
 
-        <div class="nav-buttons">
-            <a href="cartera.html" class="nav-btn active">
-                <i class="fa-solid fa-wallet"></i> Cartera
-            </a>
-            <a href="efectivo.html" class="nav-btn">
-                <i class="fa-solid fa-money-bill-wave"></i> Efectivo
-            </a>
-        </div>
+      <div class="nav-buttons">
+        <a href="cartera.html" class="nav-btn active">
+          <i class="fa-solid fa-wallet"></i> Cartera
+        </a>
+        <a href="efectivo.html" class="nav-btn">
+          <i class="fa-solid fa-money-bill-wave"></i> Efectivo
+        </a>
+      </div>
 
-        <input type="text" class="search" placeholder="Buscar ETFs">
-        <input type="text" class="user-display" value="@usuario_actual" readonly>  
+      <input type="text" class="search" placeholder="Buscar ETFs" />
+      <input
+        type="text"
+        class="user-display"
+        value="@usuario_actual"
+        readonly
+      />
     </div>
 
     <div class="etf-header">
-        <h2>Opciones de la cartera</h2>
-        <div class="botones-etf">
-<<<<<<< HEAD
-            <button id="btnAnalisisCartera" class="opcion-btn">
-                <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
-              </button>              
-              
-              <button id="btnPlanInversion" class="opcion-btn">
-                <i class="fa-solid fa-calendar-check"></i> Plan de inversión
-              </button>
-=======
-          <button class="opcion-btn">
-            <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
-          </button>
-          <button class="opcion-btn">
-            <i class="fa-solid fa-bullseye"></i> Plan de inversión
-          </button>
->>>>>>> d490264f40eb54f86cacdd741282e825b3877b57
-        </div>
+      <h2>Opciones de la cartera</h2>
+      <div class="botones-etf">
+        <button id="btnAnalisisCartera" class="opcion-btn">
+          <i class="fa-solid fa-chart-pie"></i> Análisis de la cartera
+        </button>
+
+        <button id="btnPlanInversion" class="opcion-btn">
+          <i class="fa-solid fa-calendar-check"></i> Plan de inversión
+        </button>
       </div>
-      
-    
-    <div class="contenido-principal">
-        <div class="seccion-etfs">
-            <h2>ETFs Disponibles</h2>
-            <div id="etf-list">
-                <!-- Aquí se cargará la lista de ETFs -->
-                <p>Cargando ETFs...</p>
-            </div>
-            <div id="etf-detalle" style="display:none;">
-                <!-- Aquí se mostrará el detalle de un ETF -->
-            </div>
-        </div>
     </div>
 
-
+    <div class="contenido-principal">
+      <div class="seccion-etfs">
+        <h2>ETFs Disponibles</h2>
+        <div id="etf-list">
+          <!-- Aquí se cargará la lista de ETFs -->
+          <p>Cargando ETFs...</p>
+        </div>
+        <div id="etf-detalle" style="display: none">
+          <!-- Aquí se mostrará el detalle de un ETF -->
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
     <script src="etf.js"></script>
-<<<<<<< HEAD
-      
-=======
->>>>>>> d490264f40eb54f86cacdd741282e825b3877b57
-</body>
+  </body>
 </html>
