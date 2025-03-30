@@ -29,6 +29,11 @@
         <input type="text" class="user-display" value="@Pablo" readonly />
       </div>
     </div>
+    <div class="top-right">
+      <input type="text" class="search" placeholder="Buscar ETFs">
+      <input type="text" class="user-display" value="@usuario_actual" readonly />
+    </div>
+  </div>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="contenido-analisis">
@@ -64,4 +69,30 @@
 
     <script src="script.js"></script>
   </body>
+    <div class="columna mis-etfs">
+      <h3><i class="fa-solid fa-bars"></i> Mis ETFs</h3>
+      <ul class="lista-etfs">
+        <li>S&P 500 USD (Dist)</li>
+        <li>Core MSCI World USD (Acc)</li>
+        <li>MSCI World USD (Acc)</li>
+        <li>MSCI World USD (Acc)</li>
+      </ul>
+    </div>
+
+    <div class="columna operaciones">
+      <h3><i class="fa-solid fa-sliders"></i> Operaciones</h3>
+      
+      <button class="op-btn" onclick="window.open('Invertir_etfs.html', '_blank')">
+        💸 Comprar ETFs
+        </button>
+       
+      <button class="op-btn" onclick="window.open('ingresar.html', '_blank')">
+        ➕ Ingresar dinero
+        </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
 </html>

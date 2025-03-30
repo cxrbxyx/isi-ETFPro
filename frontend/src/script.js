@@ -116,65 +116,65 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // REDIRECCIÓN DEL BOTÓN "PLAN DE INVERSIÓN"
-const planInversionBtn = document.getElementById("btnPlanInversion");
+    const planInversionBtn = document.getElementById("btnPlanInversion");
 
-if (planInversionBtn) {
-    planInversionBtn.addEventListener("click", function () {
-        window.location.href = "plan_inversion.html";
-    });
-}
-
-// REDIRECCIÓN DEL BOTÓN "ANÁLISIS DE LA CARTERA"
-const analisisBtn = document.getElementById("btnAnalisisCartera");
-
-if (analisisBtn) {
-  analisisBtn.addEventListener("click", function () {
-    window.location.href = "analisis.html";
-  });
-}
-
-// REDIRECCIÓN DEL BOTÓN "COMPRAR ETFs" EN ANALISIS.HTML
-const btnComprarEtfs = document.getElementById("btnComprarEtfs");
-
-if (btnComprarEtfs) {
-  btnComprarEtfs.addEventListener("click", function () {
-    window.location.href = "Invertir_etfs.html";
-  });
-}
-
-// REDIRECCIÓN DEL BOTÓN "INGRESAR DINERO" EN ANALISIS.HTML
-const btnIngresarDinero = document.getElementById("btnIngresarDinero");
-
-if (btnIngresarDinero) {
-  btnIngresarDinero.addEventListener("click", function () {
-    window.location.href = "ingresar.html";
-  });
-}
-
-// CARGA DE GRÁFICA EN ANALISIS.HTML
-const grafico = document.getElementById("graficoCartera");
-
-if (grafico) {
-  const ctx = grafico.getContext("2d");
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['S&P 500', 'MSCI World', 'EAFE'],
-      datasets: [{
-        data: [50, 30, 20],
-        backgroundColor: ['#2c3e50', '#95a5a6', '#bdc3c7']
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: {
-        legend: {
-          position: 'top'
-        }
-      }
+    if (planInversionBtn) {
+        planInversionBtn.addEventListener("click", function () {
+            window.location.href = "plan_inversion.html";
+        });
     }
-  });
-}
+
+    // REDIRECCIÓN DEL BOTÓN "ANÁLISIS DE LA CARTERA"
+    const analisisBtn = document.getElementById("btnAnalisisCartera");
+
+    if (analisisBtn) {
+    analisisBtn.addEventListener("click", function () {
+        window.location.href = "analisis.html";
+    });
+    }
+
+    // REDIRECCIÓN DEL BOTÓN "COMPRAR ETFs" EN ANALISIS.HTML
+    const btnComprarEtfs = document.getElementById("btnComprarEtfs");
+
+    if (btnComprarEtfs) {
+    btnComprarEtfs.addEventListener("click", function () {
+        window.location.href = "Invertir_etfs.html";
+    });
+    }
+
+    // REDIRECCIÓN DEL BOTÓN "INGRESAR DINERO" EN ANALISIS.HTML
+    const btnIngresarDinero = document.getElementById("btnIngresarDinero");
+
+    if (btnIngresarDinero) {
+    btnIngresarDinero.addEventListener("click", function () {
+        window.location.href = "ingresar.html";
+    });
+    }
+
+    // CARGA DE GRÁFICA EN ANALISIS.HTML
+    const grafico = document.getElementById("graficoCartera");
+
+    if (grafico) {
+    const ctx = grafico.getContext("2d");
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+        labels: ['S&P 500', 'MSCI World', 'EAFE'],
+        datasets: [{
+            data: [50, 30, 20],
+            backgroundColor: ['#2c3e50', '#95a5a6', '#bdc3c7']
+        }]
+        },
+        options: {
+        responsive: false,
+        plugins: {
+            legend: {
+            position: 'top'
+            }
+        }
+        }
+    });
+    }
 
 
     // REPARTO ALEATORIO DE SALDO EN 3 BURBUJAS
@@ -218,40 +218,136 @@ if (grafico) {
         });
     }
 });
-// FUNCIONALIDAD DE INVERTIR_ETFS.HTML
-const etfSelect = document.getElementById("etf");
-const montoInput = document.getElementById("monto");
-const precioSpan = document.getElementById("precio");
-const cantidadSpan = document.getElementById("cantidad");
-const saldoSpan = document.getElementById("saldo");
 
-if (etfSelect && montoInput && precioSpan && cantidadSpan && saldoSpan) {
-    let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 5000;
-    saldoSpan.textContent = saldo.toFixed(2);
+    // FUNCIONALIDAD DE INVERTIR_ETFS.HTML
+    const etfSelect = document.getElementById("etf");
+    const montoInput = document.getElementById("monto");
+    const precioSpan = document.getElementById("precio");
+    const cantidadSpan = document.getElementById("cantidad");
+    const saldoSpan = document.getElementById("saldo");
 
-    etfSelect.addEventListener("change", function () {
-        const precio = parseFloat(this.value);
-        if (!isNaN(precio)) {
-            precioSpan.textContent = precio;
-            calcularCantidad(precio);
-        }
-    });
+    if (etfSelect && montoInput && precioSpan && cantidadSpan && saldoSpan) {
+        let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 5000;
+        saldoSpan.textContent = saldo.toFixed(2);
 
-    montoInput.addEventListener("input", function () {
-        const precio = parseFloat(etfSelect.value);
-        if (!isNaN(precio)) {
-            calcularCantidad(precio);
-        }
-    });
+        etfSelect.addEventListener("change", function () {
+            const precio = parseFloat(this.value);
+            if (!isNaN(precio)) {
+                precioSpan.textContent = precio;
+                calcularCantidad(precio);
+            }
+        });
 
-    function calcularCantidad(precio) {
-        const monto = parseFloat(montoInput.value);
-        if (!isNaN(monto)) {
-            const cantidad = monto / precio;
-            cantidadSpan.textContent = cantidad.toFixed(2);
-        } else {
-            cantidadSpan.textContent = "---";
+        montoInput.addEventListener("input", function () {
+            const precio = parseFloat(etfSelect.value);
+            if (!isNaN(precio)) {
+                calcularCantidad(precio);
+            }
+        });
+
+        function calcularCantidad(precio) {
+            const monto = parseFloat(montoInput.value);
+            if (!isNaN(monto)) {
+                const cantidad = monto / precio;
+                cantidadSpan.textContent = cantidad.toFixed(2);
+            } else {
+                cantidadSpan.textContent = "---";
+            }
         }
     }
-}
+
+    // Confirmar la inversión y restar del saldo disponible
+    document.querySelector(".confirmar").addEventListener("click", function () {
+    const monto = parseFloat(document.getElementById("monto").value);
+    let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 0;
+
+    if (isNaN(monto) || monto <= 0) {
+        alert("Introduce un monto válido.");
+        return;
+    }
+
+    if (monto > saldo) {
+        alert("Saldo insuficiente.");
+        return;
+    }
+
+    // Restar y actualizar saldo
+    saldo -= monto;
+    localStorage.setItem("saldoDisponible", saldo.toFixed(2));
+
+    alert(`Has invertido $${monto.toFixed(2)} correctamente.`);
+    
+    // Redirige o cierra ventana
+    window.location.href = "efectivo.html"; // o usa window.close();
+    });
+
+    const botonesCantidad = document.querySelectorAll(".botones-cantidad button");
+    const inputCantidad = document.querySelector(".input-cantidad");
+
+    botonesCantidad.forEach(boton => {
+    boton.addEventListener("click", () => {
+        const cantidad = boton.textContent.replace("€", "").trim();
+        inputCantidad.value = cantidad;
+        });
+    });
+
+    const botonesPeriodo = document.querySelectorAll(".botones-periodo button");
+    const inputPeriodo = document.querySelector(".input-periodo");
+
+    botonesPeriodo.forEach(boton => {
+    boton.addEventListener("click", () => {
+        const texto = boton.textContent.trim();
+        inputPeriodo.value = texto;
+        });
+    });
+
+
+    document.getElementById("crearPlanBtn").addEventListener("click", function () {
+        const cantidadStr = document.querySelector(".input-cantidad").value.trim().replace("€", "").replace(",", ".");
+        const periodicidad = document.querySelector(".input-periodo").value.trim();
+        const usuario = localStorage.getItem("currentUser");
+      
+        if (!usuario) {
+          alert("No se ha iniciado sesión.");
+          return;
+        }
+      
+        if (!etfSeleccionado || cantidadStr === "" || periodicidad === "") {
+          alert("Por favor, completa todos los campos.");
+          return;
+        }
+      
+        const cantidad = parseFloat(cantidadStr);
+        if (isNaN(cantidad) || cantidad <= 0) {
+          alert("Introduce una cantidad válida.");
+          return;
+        }
+      
+        let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 0;
+      
+        if (cantidad > saldo) {
+          alert("Saldo insuficiente.");
+          return;
+        }
+      
+        saldo -= cantidad;
+        localStorage.setItem("saldoDisponible", saldo.toFixed(2));
+      
+        const plan = {
+          usuario: usuario,
+          etf: etfSeleccionado,
+          cantidad: cantidad,
+          periodicidad: periodicidad
+        };
+      
+        let planesGuardados = JSON.parse(localStorage.getItem("planesInversion")) || [];
+        planesGuardados.push(plan);
+        localStorage.setItem("planesInversion", JSON.stringify(planesGuardados));
+      
+        alert(`¡Plan guardado correctamente! Saldo restante: ${saldo.toFixed(2)} €`);
+        window.location.href = "cartera.html";
+      });
+      
+      
+      
 

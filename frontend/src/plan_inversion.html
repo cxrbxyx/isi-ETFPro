@@ -18,7 +18,7 @@
     </div>
     <div class="top-right">
       <input type="text" class="search" placeholder="Buscar ETFs">
-      <input type="text" class="user-display" value="@Usuario_actual" readonly>
+      <input type="text" class="user-display" value="@usuario_actual" readonly />
     </div>
   </div>
 
@@ -41,32 +41,36 @@
         <button>50 €</button>
         <button>100 €</button>
         <button>200 €</button>
+        <button>250 €</button>
+        <button>300 €</button>
       </div>
       <input type="text" placeholder="Otra cantidad €" class="input-cantidad">
     </div>
 
     <div class="columna">
       <h3>Periodicidad de la inversión</h3>
-      <div class="botones-periodo">
-        <button>Cada 15 días</button>
-        <button>Cada mes</button>
-      </div>
+      <!-- <div class="botones-periodo">
+        <button>15 días</button>
+        <button>30 días</button>
+      </div> -->
       <input type="text" placeholder="Introduzca una cantidad en días" class="input-periodo">
     </div>
+
   </div>
 
 </div>
 
 <div class="acciones">
-  <button class="cancelar"><i class="fa-solid fa-xmark"></i> Cancelar</button>
-  <button id="crearPlanBtn" class="confirmar"><i class="fa-solid fa-rocket"></i> Crear plan</button>
+  <button class="cancelar-btn" onclick="window.open('cartera.html', '_self')">
+    <i class="fa-solid fa-xmark"></i> Cancelar
+  </button>
+ <button id="crearPlanBtn" class="confirmar"><i class="fa-solid fa-rocket"></i> Crear plan</button>
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     let etfSeleccionado = null;
 
-    // Selección de ETF
     document.querySelectorAll(".etf-option").forEach((etf) => {
       etf.addEventListener("click", function (e) {
         e.preventDefault();
@@ -106,6 +110,81 @@
     });
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let etfSeleccionado = null;
+
+    document.querySelectorAll(".lista-etfs li a").forEach((etf) => {
+      etf.addEventListener("click", function (e) {
+        e.preventDefault();
+        etfSeleccionado = this.textContent;
+        alert("Seleccionado: " + etfSeleccionado);
+      });
+    });
+
+    // Poner cantidad del botón en el input
+    const botonesCantidad = document.querySelectorAll(".botones-cantidad button");
+    const inputCantidad = document.querySelector(".input-cantidad");
+
+    botonesCantidad.forEach(boton => {
+      boton.addEventListener("click", () => {
+        const cantidad = boton.textContent.replace("€", "").trim();
+        inputCantidad.value = cantidad;
+      });
+    });
+
+    // Al pulsar "Crear plan"
+    document.getElementById("crearPlanBtn").addEventListener("click", function () {
+      const cantidadStr = document.querySelector(".input-cantidad").value.trim().replace("€", "").replace(",", ".");
+      const periodicidad = document.querySelector(".input-periodo").value.trim();
+      const usuario = localStorage.getItem("currentUser");
+
+      if (!usuario) {
+        alert("No se ha iniciado sesión.");
+        return;
+      }
+
+      if (!etfSeleccionado || cantidadStr === "" || periodicidad === "") {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      const cantidad = parseFloat(cantidadStr);
+      if (isNaN(cantidad) || cantidad <= 0) {
+        alert("Introduce una cantidad válida.");
+        return;
+      }
+
+      let saldo = parseFloat(localStorage.getItem("saldoDisponible")) || 0;
+
+      if (cantidad > saldo) {
+        alert("Saldo insuficiente.");
+        return;
+      }
+
+      saldo -= cantidad;
+      localStorage.setItem("saldoDisponible", saldo.toFixed(2));
+
+      const plan = {
+        usuario: usuario,
+        etf: etfSeleccionado,
+        cantidad: cantidad,
+        periodicidad: periodicidad
+      };
+
+      let planesGuardados = JSON.parse(localStorage.getItem("planesInversion")) || [];
+      planesGuardados.push(plan);
+      localStorage.setItem("planesInversion", JSON.stringify(planesGuardados));
+
+      alert(`¡Plan guardado correctamente! Saldo restante: ${saldo.toFixed(2)} €`);
+      window.location.href = "cartera.html";
+    });
+  });
+</script>
+
+<script src="script.js"></script>
+
 </body>
 </html>
 
