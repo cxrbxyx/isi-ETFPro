@@ -26,47 +26,304 @@
       </div>
       <div class="top-right">
         <input type="text" class="search" placeholder="Buscar ETFs" />
-        <input type="text" class="user-display" value="@Pablo" readonly />
+        <input type="text" class="user-display" value="@usuario" readonly />
       </div>
     </div>
-  </div>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="contenido-analisis">
       <div class="columna grafica">
         <h3><i class="fa-solid fa-chart-pie"></i> Gráfica de ETFs</h3>
-        <canvas id="graficoCartera" width="320" height="320"></canvas>
-        <p class="total-invertido">Total invertido: 350 €</p>
+        <div class="canvas-container">
+          <canvas id="graficoCartera"></canvas>
+        </div>
+        <p class="total-invertido" id="total-invertido">Cargando inversión total...</p>
       </div>
 
       <div class="columna mis-etfs">
         <h3><i class="fa-solid fa-bars"></i> Mis ETFs</h3>
-        <ul class="lista-etfs">
-          <li>S&P 500 USD (Dist)</li>
-          <li>Core MSCI World USD (Acc)</li>
-          <li>MSCI World USD (Acc)</li>
-          <li>MSCI World USD (Acc)</li>
+        <ul class="lista-etfs" id="lista-etfs">
+          <li class="cargando-etfs">Cargando tus ETFs...</li>
         </ul>
       </div>
 
       <div class="columna operaciones">
         <h3><i class="fa-solid fa-sliders"></i> Operaciones</h3>
         
-        <button class="op-btn" onclick="window.open('Invertir_etfs.html', '_blank')">
+        <button class="op-btn" id="btnComprarEtfs">
           💸 Comprar ETFs
-          </button>
+        </button>
          
-        <button class="op-btn" onclick="window.open('ingresar.html', '_blank')">
+        <button class="op-btn" id="btnIngresarDinero">
           ➕ Ingresar dinero
-          </button>
-      </div>
+        </button>
+
+        <button class="op-btn" id="btnActualizarCartera">
+          🔄 Actualizar cartera
+        </button>
       </div>
     </div>
 
+    <script>
+      // Variable global para almacenar la instancia del gráfico
+      let graficoCartera = null;
+      
+      document.addEventListener("DOMContentLoaded", function() {
+        // Verificar si hay usuario autenticado
+        const usuarioActual = localStorage.getItem("currentUser");
+        if (!usuarioActual) {
+          window.location.href = "login.html";
+          return;
+        }
+        
+        // Mostrar el usuario actual
+        document.querySelector(".user-display").value = "@" + usuarioActual;
+        
+        // Configurar botones
+        document.getElementById("btnComprarEtfs").addEventListener("click", function() {
+          window.location.href = "Invertir_etfs.html";
+        });
+        
+        document.getElementById("btnIngresarDinero").addEventListener("click", function() {
+          window.location.href = "ingresar.html";
+        });
+        
+        document.getElementById("btnActualizarCartera").addEventListener("click", function() {
+          cargarCartera();
+        });
+        
+        // Función para cargar los datos de la cartera del usuario
+        async function cargarCartera() {
+          try {
+            // Mostrar mensajes de carga
+            document.getElementById("lista-etfs").innerHTML = '<li class="cargando-etfs">Cargando tus ETFs...</li>';
+            document.getElementById("total-invertido").textContent = "Cargando inversión total...";
+            
+            console.log("Solicitando datos de la cartera para:", usuarioActual);
+            const response = await fetch(`http://localhost:5000/api/cartera/${usuarioActual}`);
+            
+            if (!response.ok) {
+              console.error("Error en la respuesta:", await response.text());
+              throw new Error(`Error al obtener datos (${response.status})`);
+            }
+            
+            const data = await response.json();
+            console.log("Datos recibidos:", data);
+            
+            // Verificar si hay items en la cartera
+            if (data.cartera && data.cartera.items && data.cartera.items.length > 0) {
+              // Formatear el valor total
+              const valorTotal = parseFloat(data.cartera.valor_total) || 0;
+              document.getElementById("total-invertido").textContent = `Total invertido: ${valorTotal.toFixed(2)} €`;
+              
+              // Llenar la lista de ETFs
+              const listaEtfs = document.getElementById("lista-etfs");
+              listaEtfs.innerHTML = '';
+              
+              // Preparar datos para el gráfico
+              const etiquetas = [];
+              const valores = [];
+              const colores = generarColores(data.cartera.items.length);
+              
+              // Agregar cada ETF a la lista
+              data.cartera.items.forEach((item, index) => {
+                // Crear elemento de lista para cada ETF
+                const li = document.createElement("li");
+                const valorFormateado = parseFloat(item.valor_total).toFixed(2);
+                
+                li.innerHTML = `
+                  <div class="etf-item">
+                    <span class="etf-simbolo">${item.simbolo}</span>
+                    <span class="etf-nombre">${item.nombre}</span>
+                    <div class="etf-detalles">
+                      <span class="etf-cantidad">${parseFloat(item.cantidad).toFixed(6)} unidades</span>
+                      <span class="etf-valor">Valor: ${valorFormateado} €</span>
+                    </div>
+                  </div>
+                `;
+                listaEtfs.appendChild(li);
+                
+                // Datos para el gráfico
+                etiquetas.push(item.simbolo);
+                valores.push(parseFloat(item.valor_total));
+              });
+              
+              // Crear o actualizar el gráfico
+              crearGrafica(etiquetas, valores, colores);
+            } else {
+              // No hay ETFs en la cartera
+              document.getElementById("lista-etfs").innerHTML = 
+                '<li class="sin-etfs">No tienes ETFs en tu cartera. <a href="Invertir_etfs.html">¡Empieza a invertir!</a></li>';
+              document.getElementById("total-invertido").textContent = "Total invertido: 0.00 €";
+              
+              // Crear gráfico vacío
+              crearGrafica(["Sin inversiones"], [1], ["#e0e0e0"]);
+            }
+          } catch (error) {
+            console.error("Error en cargarCartera:", error);
+            document.getElementById("lista-etfs").innerHTML = 
+              `<li class="error">Error al cargar tus ETFs: ${error.message}</li>`;
+            document.getElementById("total-invertido").textContent = "Error al cargar datos";
+          }
+        }
+        
+        // Función para crear el gráfico
+        function crearGrafica(etiquetas, valores, colores) {
+          const ctx = document.getElementById('graficoCartera').getContext('2d');
+          
+          // Destruir gráfico existente si lo hay
+          if (graficoCartera) {
+            graficoCartera.destroy();
+            graficoCartera = null;
+          }
+          
+          // Crear el nuevo gráfico
+          graficoCartera = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: etiquetas,
+              datasets: [{
+                data: valores,
+                backgroundColor: colores,
+                borderColor: 'white',
+                borderWidth: 2,
+                hoverOffset: 15
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: {
+                    padding: 15,
+                    font: {
+                      size: 12
+                    },
+                    color: '#333'
+                  }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const label = context.label || '';
+                      const value = context.parsed || 0;
+                      const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                      const percentage = ((value * 100) / total).toFixed(1);
+                      return `${label}: ${value.toFixed(2)}€ (${percentage}%)`;
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
+        
+        // Función para generar colores aleatorios
+        function generarColores(cantidad) {
+          // Colores predefinidos para mejor estética
+          const coloresPredefinidos = [
+            '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+            '#6f42c1', '#5a5c69', '#858796', '#2e59d9', '#17a673'
+          ];
+          
+          if (cantidad <= coloresPredefinidos.length) {
+            return coloresPredefinidos.slice(0, cantidad);
+          }
+          
+          // Si necesitamos más colores que los predefinidos, generamos algunos aleatorios
+          const colores = [...coloresPredefinidos];
+          
+          for (let i = coloresPredefinidos.length; i < cantidad; i++) {
+            const r = Math.floor(Math.random() * 200) + 20; // Evitar colores demasiado claros
+            const g = Math.floor(Math.random() * 200) + 20;
+            const b = Math.floor(Math.random() * 200) + 20;
+            colores.push(`rgb(${r}, ${g}, ${b})`);
+          }
+          
+          return colores;
+        }
+        
+        // Cargar la cartera al iniciar
+        cargarCartera();
+      });
+    </script>
 
-
-
-  <script src="script.js"></script>
-
-</body>
+    <style>
+      .canvas-container {
+        position: relative;
+        height: 320px;
+        width: 320px;
+        margin: 0 auto;
+      }
+      
+      .cargando-etfs {
+        color: #666;
+        font-style: italic;
+      }
+      
+      .error {
+        color: #e74a3b;
+        font-weight: bold;
+      }
+      
+      .sin-etfs {
+        color: #666;
+        text-align: center;
+      }
+      
+      .sin-etfs a {
+        color: #4e73df;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      
+      .sin-etfs a:hover {
+        text-decoration: underline;
+      }
+      
+      .etf-item {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .etf-simbolo {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #333;
+        margin-right: 10px;
+      }
+      
+      .etf-nombre {
+        color: #444;
+      }
+      
+      .etf-detalles {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #666;
+      }
+      
+      /* Estilo para el botón de actualizar */
+      #btnActualizarCartera {
+        margin-top: 20px;
+        background-color: #f8f9fc;
+      }
+      
+      #btnActualizarCartera:hover {
+        background-color: #eaecf4;
+      }
+      
+      #total-invertido {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+      }
+    </style>
+  </body>
 </html>

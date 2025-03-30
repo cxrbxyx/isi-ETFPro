@@ -15,6 +15,8 @@ except ImportError:
 from datetime import datetime, timedelta
 from User import User, db
 from Etf import ETF
+from Portfolio import Portfolio
+from Portfolio_item import Portfolio_item
 
 app = Flask(__name__)
 CORS(app)  # Permitir solicitudes desde el frontend
@@ -388,6 +390,132 @@ def obtener_precios_etf(simbolo):
         
     except Exception as e:
         return jsonify({"error": f"Error al obtener precios: {str(e)}"}), 500
+
+@app.route('/api/comprar-etf', methods=['POST'])
+def comprar_etf():
+    """
+    Registra la compra de un ETF por parte de un usuario.
+    Actualiza o crea una cartera para el usuario según sea necesario.
+    """
+    # Verificar autenticación
+    data = request.get_json()
+    username = data.get('username')
+    simbolo_etf = data.get('simbolo')
+    monto = data.get('monto')
+    cantidad = data.get('cantidad')
+    
+    if not username or not simbolo_etf or not monto or not cantidad:
+        return jsonify({"error": "Faltan datos obligatorios"}), 400
+    
+    try:
+        # 1. Verificar que el usuario existe
+        usuario = User.query.filter_by(username=username).first()
+        if not usuario:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+        
+        # 2. Verificar que el ETF existe
+        etf = ETF.query.filter_by(symbol=simbolo_etf).first()
+        if not etf:
+            return jsonify({"error": f"ETF {simbolo_etf} no encontrado"}), 404
+        
+        # 3. Buscar o crear la cartera del usuario
+        cartera = Portfolio.query.filter_by(user_id=usuario.id, name="Principal").first()
+        if not cartera:
+            # Crear una cartera principal si no existe
+            cartera = Portfolio(
+                user_id=usuario.id,
+                name="Principal",
+                value=0.0
+            )
+            db.session.add(cartera)
+            db.session.flush()  # Obtener ID sin hacer commit
+        
+        # 4. Buscar si ya tiene este ETF en su cartera
+        item_existente = Portfolio_item.query.filter_by(
+            portfolio_id=cartera.id, 
+            etf_id=etf.id
+        ).first()
+        
+        if item_existente:
+            # Actualizar item existente (compra adicional)
+            nueva_cantidad = item_existente.allocation + cantidad
+            item_existente.allocation = nueva_cantidad
+        else:
+            # Crear nuevo item en la cartera
+            nuevo_item = Portfolio_item(
+                portfolio_id=cartera.id,
+                etf_id=etf.id,
+                allocation=cantidad
+            )
+            db.session.add(nuevo_item)
+        
+        # 5. Actualizar el valor de la cartera
+        cartera.value += monto
+        cartera.last_update = datetime.now()
+        
+        # 6. Guardar cambios en la base de datos
+        db.session.commit()
+        
+        return jsonify({
+            "mensaje": f"Compra de {cantidad} unidades de {simbolo_etf} registrada correctamente",
+            "cartera": cartera.to_dict()
+        }), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error al procesar la compra: {str(e)}"}), 500
+
+# Añadamos también un endpoint para obtener la cartera de un usuario
+@app.route('/api/cartera/<string:username>', methods=['GET'])
+def obtener_cartera(username):
+    """
+    Obtiene la cartera de inversiones de un usuario específico.
+    """
+    try:
+        # Buscar al usuario
+        usuario = User.query.filter_by(username=username).first()
+        if not usuario:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+        
+        # Buscar la cartera principal
+        cartera = Portfolio.query.filter_by(user_id=usuario.id, name="Principal").first()
+        if not cartera:
+            # Si no tiene cartera, devolver una vacía
+            return jsonify({
+                "usuario": username,
+                "cartera": {
+                    "valor_total": 0,
+                    "items": []
+                }
+            }), 200
+        
+        # Obtener los items de la cartera con detalles
+        items_cartera = []
+        for item in Portfolio_item.query.filter_by(portfolio_id=cartera.id).all():
+            etf = ETF.query.get(item.etf_id)
+            if etf:
+                valor_actual = item.allocation * etf.current_price if etf.current_price else 0
+                items_cartera.append({
+                    "simbolo": etf.symbol,
+                    "nombre": etf.name,
+                    "cantidad": item.allocation,
+                    "precio_actual": etf.current_price,
+                    "valor_total": valor_actual
+                })
+        
+        return jsonify({
+            "usuario": username,
+            "cartera": {
+                "id": cartera.id,
+                "nombre": cartera.name,
+                "valor_total": cartera.value,
+                "ultima_actualizacion": cartera.last_update.isoformat(),
+                "items": items_cartera
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener la cartera: {str(e)}"}), 500
 
 # Iniciar el servidor
 if __name__ == '__main__':

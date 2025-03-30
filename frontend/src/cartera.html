@@ -61,5 +61,34 @@
 
     <script src="script.js"></script>
     <script src="etf.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Obtener el usuario actual
+        const usuarioActual = localStorage.getItem("currentUser");
+        
+        if (usuarioActual) {
+          document.querySelector(".user-display").value = "@" + usuarioActual;
+          
+          // Cargar la cartera del usuario desde la API
+          fetch(`http://localhost:5000/api/cartera/${usuarioActual}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.cartera && data.cartera.items && data.cartera.items.length > 0) {
+                // Podemos usar esta información para actualizar la visualización
+                console.log("Cartera cargada:", data);
+                
+                // Aquí puedes agregar código para mostrar la cartera en la interfaz
+                // Por ejemplo, mostrando los ETFs que tiene el usuario en una tabla
+              }
+            })
+            .catch(error => {
+              console.error("Error al cargar la cartera:", error);
+            });
+        } else {
+          // Redirigir al login si no hay usuario
+          window.location.href = "login.html";
+        }
+      });
+    </script>
   </body>
 </html>
