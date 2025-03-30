@@ -50,7 +50,7 @@ body {
 } */
 
 .user-display {
-    margin-left: auto; /* 📌 Esto empuja el input a la derecha */
+    margin-left: auto;
     padding: 6px 10px;
     background-color: #eee;
     border: none;
@@ -124,8 +124,6 @@ body {
     line-height: 1.1;
     word-break: break-word;
 }
-
-
 
 .green {
     background-color: #059541;
