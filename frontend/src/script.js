@@ -115,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         saldoElemento.textContent = `${parseFloat(saldoActual).toFixed(2)} €`;
     }
 
-<<<<<<< HEAD
     // REDIRECCIÓN DEL BOTÓN "PLAN DE INVERSIÓN"
 const planInversionBtn = document.getElementById("btnPlanInversion");
 
@@ -178,8 +177,6 @@ if (grafico) {
 }
 
 
-=======
->>>>>>> d490264f40eb54f86cacdd741282e825b3877b57
     // REPARTO ALEATORIO DE SALDO EN 3 BURBUJAS
     function repartirSaldoAleatoriamente(total) {
         const parte1 = Math.random();
@@ -221,7 +218,6 @@ if (grafico) {
         });
     }
 });
-<<<<<<< HEAD
 // FUNCIONALIDAD DE INVERTIR_ETFS.HTML
 const etfSelect = document.getElementById("etf");
 const montoInput = document.getElementById("monto");
@@ -259,5 +255,3 @@ if (etfSelect && montoInput && precioSpan && cantidadSpan && saldoSpan) {
     }
 }
 
-=======
->>>>>>> d490264f40eb54f86cacdd741282e825b3877b57
