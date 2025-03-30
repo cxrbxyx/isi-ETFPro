@@ -1,151 +1,180 @@
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #e5e7eb;
-  }
-  
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 10px 30px;
-    height: 80px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-  }
-  
-  .top-left {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-  }
-  
-  .logo-big {
-    height: 45px;
-    width: 45px;
-  }
-  
-  .nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .nav-btn {
-    font-size: 18px;
-    color: #6e6e6e;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .nav-btn.active {
-    color: black;
-  }
-  
-  .top-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .search {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    width: 200px;
-  }
-  
-  .user-display {
-    background: #f3f4f6;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .contenido-plan {
-    display: flex;
-    justify-content: space-around;
-    padding: 60px 80px;
-    gap: 60px;
-  }
-  
-  .columna {
-    flex: 1;
-    max-width: 300px;
-  }
-  
-  .columna h3 {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .lista-etfs {
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .lista-etfs li {
-    margin-bottom: 12px;
-  }
-  
-  .lista-etfs a {
-    text-decoration: underline;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .botones-cantidad button,
-  .botones-periodo button {
-    margin: 6px;
-    padding: 10px 20px;
-    font-size: 15px;
-    border: 1px solid #ccc;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .input-cantidad,
-  .input-periodo {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    font-size: 15px;
-    border-radius: 4px;
-    border: 1px solid #aaa;
-  }
-  
-  .acciones {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 40px 0;
-  }
-  
-  .cancelar-btn {
-    background: none;
-    border: none;
-    color: red;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .confirmar {
-    background: black;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px 30px;
+  height: 80px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo-big {
+  height: 45px;
+  width: 45px;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-btn {
+  font-size: 18px;
+  color: #6e6e6e;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.nav-btn.active {
+  color: black;
+}
+
+.nav-btn:hover {
+  color: #000000;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  width: 200px;
+}
+
+.user-display {
+  background: #f3f4f6;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.contenido-plan {
+  display: flex;
+  justify-content: space-around;
+  padding: 60px 80px;
+  gap: 60px;
+  background-color: #f3eac2;
+  border-radius: 12px;
+  margin: 40px auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+}
+
+.columna {
+  flex: 1;
+  max-width: 300px;
+}
+
+.columna h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.lista-etfs {
+  list-style: none;
+  padding-left: 0;
+}
+
+.lista-etfs li {
+  margin-bottom: 12px;
+}
+
+.lista-etfs a {
+  text-decoration: underline;
+  color: #020407;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.lista-etfs a:hover {
+  color: #c9a74f;
+}
+
+.botones-cantidad button,
+.botones-periodo button {
+  margin: 6px;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.botones-cantidad button:hover,
+.botones-periodo button:hover {
+  background-color: #f3eac2;
+}
+
+.input-cantidad,
+.input-periodo {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.cancelar-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.confirmar {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirmar:hover {
+  background-color: #1f2937;
+}
