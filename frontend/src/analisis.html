@@ -29,10 +29,6 @@
         <input type="text" class="user-display" value="@Pablo" readonly />
       </div>
     </div>
-    <div class="top-right">
-      <input type="text" class="search" placeholder="Buscar ETFs">
-      <input type="text" class="user-display" value="@usuario_actual" readonly />
-    </div>
   </div>
 
     <!-- CONTENIDO PRINCIPAL -->
@@ -40,7 +36,7 @@
       <div class="columna grafica">
         <h3><i class="fa-solid fa-chart-pie"></i> Gráfica de ETFs</h3>
         <canvas id="graficoCartera" width="320" height="320"></canvas>
-        <p class="total-invertido">Total invertido: 500 €</p>
+        <p class="total-invertido">Total invertido: 350 €</p>
       </div>
 
       <div class="columna mis-etfs">
@@ -55,42 +51,20 @@
 
       <div class="columna operaciones">
         <h3><i class="fa-solid fa-sliders"></i> Operaciones</h3>
-
-        <button id="btnComprarEtfs" class="boton-operacion">
-          <i class="fa-solid fa-lock"></i> Comprar ETFs
-        </button>
-
-        <button id="btnIngresarDinero" class="boton-operacion">
-          <i class="fa-solid fa-plus"></i> Ingresar dinero
-        </button>
-        >
+        
+        <button class="op-btn" onclick="window.open('Invertir_etfs.html', '_blank')">
+          💸 Comprar ETFs
+          </button>
+         
+        <button class="op-btn" onclick="window.open('ingresar.html', '_blank')">
+          ➕ Ingresar dinero
+          </button>
+      </div>
       </div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
-    <div class="columna mis-etfs">
-      <h3><i class="fa-solid fa-bars"></i> Mis ETFs</h3>
-      <ul class="lista-etfs">
-        <li>S&P 500 USD (Dist)</li>
-        <li>Core MSCI World USD (Acc)</li>
-        <li>MSCI World USD (Acc)</li>
-        <li>MSCI World USD (Acc)</li>
-      </ul>
-    </div>
 
-    <div class="columna operaciones">
-      <h3><i class="fa-solid fa-sliders"></i> Operaciones</h3>
-      
-      <button class="op-btn" onclick="window.open('Invertir_etfs.html', '_blank')">
-        💸 Comprar ETFs
-        </button>
-       
-      <button class="op-btn" onclick="window.open('ingresar.html', '_blank')">
-        ➕ Ingresar dinero
-        </button>
-    </div>
-  </div>
+
 
   <script src="script.js"></script>
 
