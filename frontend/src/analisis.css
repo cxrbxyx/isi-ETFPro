@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-color: white;
+    background-color:  #f3eac2	;
   }
   
   .top-bar {
@@ -21,8 +21,8 @@ body {
   }
   
   .logo-big {
-    height: 45px;
-    width: 45px;
+    height: 65px;
+    width: 65px;
   }
   
   .nav-buttons {
@@ -34,20 +34,31 @@ body {
   .op-btn {
     display: block;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #eee;
-    border: none;
+    padding: 14px 20px;
+    margin: 8px 0; 
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-weight: 600;
+    gap: 26px;
+    font-size: 15px;
+    color: #1f2937;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background-color 0.2s;
+    text-align: left;
+  }
+
+  .op-btn:hover {
+    background-color: #ffffff; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
   }
   
   .nav-btn {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 20px;
     color: #6e6e6e;
     text-decoration: none;
     font-weight: bold;
@@ -150,11 +161,10 @@ body {
     background-color: #eee;
   }
   
-  
   .total-invertido {
     margin-top: 25px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
     text-align: center;
   }
   

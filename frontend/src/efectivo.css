@@ -13,8 +13,8 @@ body {
 }
 
 .logo-small {
-    height: 40px;
-    margin-right: 20px;
+    height: 55px;
+    margin-right: 55px;
 }
 
 .nav-buttons {
@@ -30,7 +30,7 @@ body {
     font-weight: bold;
     color: #6e6e6e;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     transition: color 0.2s;
 }
 
@@ -55,6 +55,7 @@ body {
     background-color: #eee;
     border: none;
     font-weight: bold;
+    font-size: 20px;
     border-radius: 6px;
 }
 
@@ -66,8 +67,9 @@ body {
 }
 
 .left-section, .middle-section, .right-section {
-    background-color: white;
+    background-color: #f8f4e3;
     padding: 20px;
+    font-size: 20px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     flex: 1;
@@ -81,7 +83,7 @@ body {
 
 .saldo-label {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 5px;
 }
 
@@ -139,6 +141,7 @@ body {
 
 .middle-section ul {
     list-style: none;
+    font-size: 20px;
     padding: 0;
 }
 
@@ -152,7 +155,8 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #eee;
+    background-color: #e6ddc4;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     font-weight: bold;

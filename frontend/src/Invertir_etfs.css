@@ -1,150 +1,191 @@
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #e5e7eb;
-  }
-  
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  
-  .logo-small {
-    height: 40px;
-  }
-  
-  .search {
-    padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .user-display {
-    background-color: #eee;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-weight: bold;
-    border: none;
-  }
-  
-  .contenido-principal {
-    padding: 40px 60px;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .layout {
-    display: flex;
-    justify-content: space-between;
-    gap: 60px;
-  }
-  
-  .tabla-etfs {
-    border-collapse: collapse;
-    width: 50%;
-    background-color: white;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  .tabla-etfs th, .tabla-etfs td {
-    border: 2px solid black;
-    padding: 12px;
-    text-align: center;
-    font-size: 16px;
-  }
-  
-  .formulario {
-    width: 45%;
-    background-color: white;
-    padding: 20px;
-    font-size: 16px;
-  }
-  
-  .formulario h2 {
-    margin-bottom: 20px;
-  }
-  
-  .formulario input {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    font-size: 16px;
-  }
-  
-  #etf {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .acciones {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-  }
-  
-  .cancelar-btn {
-    background: none;
-    border: none;
-    color: red;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .confirmar {
-    background: black;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .nav-buttons {
-    display: flex;
-    gap: 10px;
-    margin-right: auto;
-    margin-left: 20px;
-  }
-  
-  .nav-btn {
-    padding: 8px 16px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    color: #6e6e6e;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.2s;
-  }
-  
-  .nav-btn.active {
-    color: #000;
-    font-weight: bold;
-  }
-  
-  .cargando {
-    text-align: center;
-    padding: 20px;
-    color: #666;
-  }
-  
-  .monto-excedido {
-    color: red;
-    border-color: red;
-  }
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fb;
+  color: #1f2937;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.logo-small {
+  height: 55px;
+}
+
+.search {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.user-display {
+  background-color: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  font-size: 15px;
+}
+
+.contenido-principal {
+  padding: 40px 60px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 25px;
+}
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.tabla-etfs {
+  width: 58%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tabla-etfs th {
+  background-color: #f5e9c6;
+  font-weight: 600;
+  padding: 14px;
+  font-size: 14px;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-etfs td {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-etfs tr:hover {
+  background-color: #f9fafb;
+}
+
+.formulario {
+  width: 42%;
+  max-height: 600px;
+  overflow-y: auto;
+  background-color:	#e3c565;
+  padding: 24px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.formulario h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #111827;
+}
+
+.formulario input, .formulario select {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  font-size: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  transition: border-color 0.2s;
+}
+
+.formulario input:focus, .formulario select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+#etf {
+  background-color: #fff;
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.cancelar-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.confirmar {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.confirmar:hover {
+  background: #1f2937;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.nav-btn {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.nav-btn.active {
+  color: #000;
+}
+
+.cargando {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+}
+
+.monto-excedido {
+  color: red;
+  border-color: red;
+}

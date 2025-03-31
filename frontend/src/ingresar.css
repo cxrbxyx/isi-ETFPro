@@ -21,11 +21,14 @@ body {
 h2 {
     margin-top: 0;
     font-weight: bold;
+    font-size: 25px;
     text-align: center;
 }
 
 label {
     font-weight: bold;
+    font-size: 20px;
+
     margin-top: 10px;
 }
 
@@ -33,12 +36,14 @@ input[type="text"],
 select {
     padding: 8px;
     border-radius: 6px;
+    font-size: 15px;
     border: 1px solid #ccc;
 }
 
 .user-display {
     align-self: flex-start;
     padding: 6px 10px;
+    font-size: 10px;
     background-color: #eee;
     border: none;
     font-weight: bold;
@@ -54,6 +59,7 @@ select {
     background: none;
     border: none;
     color: red;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -62,6 +68,7 @@ select {
     background: none;
     border: none;
     color: green;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
