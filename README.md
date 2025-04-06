@@ -10,7 +10,7 @@ Una vez obtenidos los tokens, deberán ser introducidos en las variables ALPHA_V
 También es necesaria la extensión de Visual Studio Code Live Server para poder ejecutar los html.
 # Tutorial de  despliegue y ejecución
 
-Primer paso: Crear un archivo llamado .env para almacenar los tokens de seguridad de las APIs utilizadas. Debe ser como esto:
+Primer paso: Crear un archivo llamado .env en la raiz del proyecto para almacenar los tokens de seguridad de las APIs utilizadas. Debe ser como esto:
 
 ALPHA_VANTAGE_API_KEY=<token>
 
