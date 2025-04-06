@@ -8,15 +8,17 @@ Tiingo: [https://www.tiingo.com/](https://www.tiingo.com/)
 Una vez obtenidos los tokens, deberán ser introducidos en las variables ALPHA_VANTAGE_API_KEY y TIINGO_API_TOKEN en el archivo app.py
 
 También es necesaria la extensión de Visual Studio Code Live Server para poder ejecutar los html.
-# Tutorial de ejecución
+# Tutorial de  despliegue y ejecución
 
-Primer paso: crear o utilizar un entorno virtual y ejecutar en la carpeta raiz del proyecto el siguiente comando para instalar las librerías utilizadas
+Primer paso: Crear un archivo llamado .env para almacenar los tokens de seguridad de las APIs utilizadas. Debe ser como esto:
 
-pip install -r requeriments.txt
+ALPHA_VANTAGE_API_KEY=<token>
 
-Segundo paso: ejecutar en la carpeta backend el siguiente comando para ejecutar el servidor de la aplicación
+TIINGO_API_TOKEN=<token>
 
-python3 app.py
+
+Segundo paso: Crear el contenedor docker con el comando docker compose build
+
 
 Tercer paso: Hacer click derecho en el archivo frontend/src/login.html y seleccionar la opción Open with Live Server 
 

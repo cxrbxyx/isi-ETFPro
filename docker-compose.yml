@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  etfpro-backend:
+    build: ./backend
+    network_mode: "host"
+    environment:
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+      - TIINGO_API_TOKEN=${TIINGO_API_TOKEN}
+    volumes:
+      - ./backend/instance:/app/instance

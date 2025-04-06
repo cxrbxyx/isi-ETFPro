@@ -19,7 +19,7 @@ from Portfolio import Portfolio
 from Portfolio_item import Portfolio_item
 
 app = Flask(__name__)
-CORS(app)  # Permitir solicitudes desde el frontend
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5501"]}}) # Permitir solicitudes desde el frontend
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 instance_path = os.path.join(basedir, 'instance')
@@ -36,9 +36,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db.init_app(app)
 
 # Configuración de las API keys para Alpha Vantage y Tiingo
-# Asegúrate de reemplazar estos valores con tus propias claves
-ALPHA_VANTAGE_API_KEY = ""  # Reemplaza con tu API key real
-TIINGO_API_TOKEN = ""  # Reemplaza con tu token real
+# Obtener desde variables de entorno o usar valores predeterminados
+ALPHA_VANTAGE_API_KEY = os.environ.get("ALPHA_VANTAGE_API_KEY", "")
+TIINGO_API_TOKEN = os.environ.get("TIINGO_API_TOKEN", "")
 
 # URL base para las APIs
 base_url_alphavantage = "https://www.alphavantage.co/query"
