@@ -19,7 +19,7 @@ from Portfolio import Portfolio
 from Portfolio_item import Portfolio_item
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5501"]}}) # Permitir solicitudes desde el frontend
+CORS(app, resources={r"/api/*": {"origins": ["*"]}}) # Permitir solicitudes desde el frontend
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 instance_path = os.path.join(basedir, 'instance')

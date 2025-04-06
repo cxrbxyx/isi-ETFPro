@@ -7,3 +7,10 @@ services:
       - TIINGO_API_TOKEN=${TIINGO_API_TOKEN}
     volumes:
       - ./backend/instance:/app/instance
+
+  etfpro-frontend:
+    build: ./frontend
+    network_mode: "host"
+    volumes:
+      - ./frontend/src:/usr/share/nginx/html
+      - ./frontend/assets:/usr/share/nginx/html/assets

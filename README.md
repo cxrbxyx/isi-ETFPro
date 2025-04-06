@@ -8,18 +8,21 @@ Tiingo: [https://www.tiingo.com/](https://www.tiingo.com/)
 Una vez obtenidos los tokens, deberán ser introducidos en las variables ALPHA_VANTAGE_API_KEY y TIINGO_API_TOKEN en el archivo app.py
 
 También es necesaria la extensión de Visual Studio Code Live Server para poder ejecutar los html.
+
 # Tutorial de  despliegue y ejecución
 
 Primer paso: Crear un archivo llamado .env en la raiz del proyecto para almacenar los tokens de seguridad de las APIs utilizadas. Debe ser como esto:
 
-ALPHA_VANTAGE_API_KEY=<token>
+    ALPHA_VANTAGE_API_KEY=token
 
-TIINGO_API_TOKEN=<token>
-
-
-Segundo paso: Crear el contenedor docker con el comando docker compose build
+    TIINGO_API_TOKEN=token
 
 
-Tercer paso: Hacer click derecho en el archivo frontend/src/login.html y seleccionar la opción Open with Live Server 
+Segundo paso: Crear y ejecutar el contenedor docker con el comando
+
+    docker compose up --build
+
+
+Tercer paso: Acceder a la dirección [http://localhost](http://localhost) para acceder al frontend de la aplicación
 
 Cuarto paso: Introducir el usuario/contraseña Pablo/1234 o registarse con un nuevo usuario.
