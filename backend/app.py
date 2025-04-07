@@ -8,8 +8,6 @@ try:
     from flask_cors import CORS
     from werkzeug.security import generate_password_hash, check_password_hash
 except ImportError:
-    print("AVISO: Instala los módulos requeridos para la funcionalidad completa.")
-    print(" Para instalarlo, crea un entorno virtual y ejecuta este comando en la carpeta raiz del proyecto:\npip install -r requeriments.txt")
     exit(1)
 
 from datetime import datetime, timedelta
