@@ -1,7 +1,7 @@
 # isi-ETFPro
 Para el correcto funcionamiento de la aplicación es necesario obtener el token de seguridad de las APIs utilizadas. Se pueden obtener registrándose en los siguientes enlaces
 
-Alpha Vantage: [https://www.alphavantage.co/](https://www.alphavantage.co/)
+Twelve Data: [https://twelvedata.com/](hhttps://twelvedata.com/)
 
 Tiingo: [https://www.tiingo.com/](https://www.tiingo.com/)
 
@@ -13,8 +13,7 @@ También es necesaria la extensión de Visual Studio Code Live Server para poder
 
 Primer paso: Crear un archivo llamado .env en la raiz del proyecto para almacenar los tokens de seguridad de las APIs utilizadas. Debe ser como esto:
 
-    ALPHA_VANTAGE_API_KEY=token
-
+    TWELVE_DATA_API_KEY=token
     TIINGO_API_TOKEN=token
 
 
